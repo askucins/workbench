@@ -11,3 +11,19 @@ allprojects {
 subprojects {
     version = '0.1'
 }
+
+configure(subprojects.findAll {
+    ['fun-with-groovy', 'run-me'].contains(it.name)
+}) {
+
+    apply plugin: 'groovy'
+
+    dependencies {
+        compile 'org.codehaus.groovy:groovy:2.5.2'
+        testCompile 'org.spockframework:spock-core:1.2-groovy-2.5', {
+            exclude module: 'groovy-all'
+        }
+        //    compile "org.slf4j:slf4j-api:1.8.0-beta2"
+        //    compile "ch.qos.logback:logback-classic:1.3.0-alpha4"
+    }
+}

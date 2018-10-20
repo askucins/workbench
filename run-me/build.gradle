@@ -1,14 +1,9 @@
 plugins {
-    id 'groovy'
     id 'application'
 }
 
 dependencies {
     compile project(':fun-with-groovy')
-
-    testCompile 'org.spockframework:spock-core:1.2-groovy-2.5', {
-        exclude module: 'groovy-all'
-    }
 }
 
 mainClassName = 'greeter.Greeter'
