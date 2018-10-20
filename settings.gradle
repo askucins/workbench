@@ -1,2 +1,4 @@
 rootProject.name = 'workbench'
 include 'fun-with-groovy'
+include 'run-me'
+include 'docs'
