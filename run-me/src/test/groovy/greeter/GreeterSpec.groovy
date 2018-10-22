@@ -1,7 +1,9 @@
 package greeter
 
+import groovy.util.logging.Slf4j
 import spock.lang.Specification
 
+@Slf4j
 class GreeterSpec extends Specification {
 
     def 'Calling the entry point'() {
@@ -15,5 +17,8 @@ class GreeterSpec extends Specification {
 
         then: 'The correct greeting is output'
         buf.toString() == "Hello, Gradlephant\n".denormalize()
+
+        cleanup:
+        log.info "Test executed..."
     }
 }

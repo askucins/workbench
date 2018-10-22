@@ -1,0 +1,30 @@
+<!-- From https://gist.github.com/vazexqi/5024574 -->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>FGT %d{yyyy-MM-dd HH:mm:ss.SSS} [%X{correlation}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover -->
+            <fileNamePattern>logs/test.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep 7 days' worth of history -->
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>FGT %d{yyyy-MM-dd HH:mm:ss.SSS} [%X{correlation}] [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="greeter" level="DEBUG">
+        <appender-ref ref="FILE"/>
+        <!--<appender-ref ref="STDOUT"/>-->
+    </logger>
+    
+    <!--<root level="DEBUG">-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--<appender-ref ref="STDOUT"/>-->
+    <!--</root>-->
+
+</configuration>
