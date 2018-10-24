@@ -12,10 +12,9 @@ subprojects {
     version = '0.1'
 }
 
-
-// Effectively a list og projects below is subprojects. In that case instead of configure(...) syntax
-// one could use simply 'subprojects'
-// That configure(...) is useful whey applied only to a subset of subprojects.
+// Effectively a list of projects below is all subprojects. 
+// In that case instead of configure(...) syntax one could use simply 'subprojects'
+// That configure(...) is useful when one needs to apply it only to a subset of subprojects.
 
 configure(subprojects.findAll {
     ['fun-with-groovy', 'run-me', 'misc'].contains(it.name)
