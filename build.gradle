@@ -30,3 +30,18 @@ configure(subprojects.findAll {
         }
     }
 }
+
+subprojects {
+    tasks.withType(Test) {
+        testLogging {
+            events 'passed', 'failed'
+            exceptionFormat 'short'
+
+            debug {
+                events 'passed', 'skipped', 'failed'
+                showStackTraces true
+                exceptionFormat 'full'
+            }
+        }
+    }
+}
