@@ -9,17 +9,19 @@ class ParenSpec extends Specification {
 
     def "should find the left parenthesis"() {
         expect:
-        PAREN.findParen('(' as char) == PAREN.LEFT
+        PAREN.findParen('(') == PAREN.LEFT
     }
 
     def "should find the right parenthesis"() {
         expect:
-        PAREN.findParen(')' as char) == PAREN.RIGHT
+        PAREN.findParen(')') == PAREN.RIGHT
     }
 
     def "should not match non-parenthesis"() {
         expect:
-        PAREN.findParen('x' as char) == null
+        PAREN.findParen('x') == null
+        and:
+        PAREN.findParen('()') == null
     }
 
     def "should throw an exception on null"() {

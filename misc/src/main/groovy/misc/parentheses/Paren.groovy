@@ -2,11 +2,11 @@ package misc.parentheses
 
 class Paren {
     enum PAREN {
-        LEFT('(' as char), RIGHT(')' as char)
+        LEFT('('), RIGHT(')')
 
-        final char parenValue
+        final String parenValue
 
-        private PAREN(char parenValue) {
+        private PAREN(String parenValue) {
             this.parenValue = parenValue
         }
 
@@ -15,7 +15,7 @@ class Paren {
             [(value.parenValue): value]
         }
 
-        static PAREN findParen(Character parenValue) {
+        static PAREN findParen(String parenValue) {
             if (parenValue == null) {
                 throw new IllegalArgumentException()
             } else {
