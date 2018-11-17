@@ -2,23 +2,23 @@ package misc.parentheses
 
 import groovy.util.logging.Slf4j
 import spock.lang.Narrative
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import static misc.parentheses.Balanced.isBalanced
-
 
 @Narrative('''
 Based on http://raganwald.com/2018/10/17/recursive-pattern-matching.html
 To determine, whether a string of parentheses is balanced 
 ''')
 @Slf4j
-class BalancedSpec extends Specification {
+abstract class BalancedSpec extends Specification {
+    @Shared
+    Balanced balancer
 
     @Unroll
     def "should check if |#parens| is balanced (#balanced; #comment)"() {
         expect:
-        isBalanced(parens as String) == balanced
+        balancer.isBalanced(parens as String) == balanced
         where:
         parens               | balanced | comment
         ''                   | true     | 'empty string, balanced!'
@@ -39,5 +39,12 @@ class BalancedSpec extends Specification {
         '()()()()'           | true     | 'multiple pairs are ok'
         '(())(())(((()())))' | true     | 'multiple nested are ok'
         ')()('               | false    | 'close before open'
+    }
+
+    def "should throw an exception on invalid argument"() {
+        when:
+        balancer.isBalanced('x')
+        then:
+        thrown IllegalArgumentException
     }
 }
