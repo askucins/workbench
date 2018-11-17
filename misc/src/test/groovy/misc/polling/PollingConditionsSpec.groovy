@@ -1,6 +1,7 @@
-package misc
+package misc.polling
 
 import groovy.util.logging.Slf4j
+import misc.polling.Person
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
