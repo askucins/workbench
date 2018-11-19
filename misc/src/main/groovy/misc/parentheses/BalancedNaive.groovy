@@ -1,7 +1,10 @@
 package misc.parentheses
 
+import groovy.util.logging.Slf4j
+
 import static misc.parentheses.Paren.PAREN
 
+@Slf4j
 class BalancedNaive implements Balanced {
 
     Boolean isBalanced(String parens) {
