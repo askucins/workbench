@@ -2,7 +2,7 @@ package misc.parentheses
 
 import groovy.util.logging.Slf4j
 
-/*qa
+/*
 ''
 '()'
 '()BS'
@@ -13,6 +13,18 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class BalancedByShape implements Balanced {
     Boolean isBalanced(String parens) {
-        return false
+        if (parens == '') {
+            return true
+        }
+        if (parens == '()') {
+            return true
+        }
+        def subparens = parens =~ /^\((.+)\)$/
+        if (subparens) {
+            return isBalanced(subparens[0][1] as String)
+        } else {
+            return false
+        }
     }
+
 }

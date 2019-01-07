@@ -11,8 +11,8 @@ class Paren {
         }
 
         // Reverse mapping
-        static PARENS = values().collectEntries { value ->
-            [(value.parenValue): value]
+        static PARENS = values().collectEntries { entry ->
+            [(entry.parenValue): entry]
         }
 
         static PAREN findParen(String parenValue) {
