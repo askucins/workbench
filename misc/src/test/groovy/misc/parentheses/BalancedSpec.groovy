@@ -43,10 +43,17 @@ abstract class BalancedSpec extends Specification {
         ')()('               | false    | 'close before open'
     }
 
-    def "should throw an exception on invalid argument"() {
+    @Unroll
+    def "should throw an exception on invalid argument of(|#parens|) because of (#comment)"() {
         when:
-        balancer.isBalanced('x')
+        balancer.isBalanced(parens)
         then:
         thrown IllegalArgumentException
+        where:
+        parens | comment
+        'x'    | 'no parens at all'
+        '(x)'  | 'an expression with balanced parens'
+        '(x('  | 'an expression with not balanced parens'
+        ')x)'  | 'an expression with not balanced parens'
     }
 }

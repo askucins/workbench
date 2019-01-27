@@ -21,13 +21,15 @@ class MatchMeSpec extends Specification {
 
     def "should match parens"() {
         given:
-        String parens = '()'
+        String parens = '(())'
         when:
-        def subparens = parens =~ /^\((.*)\)$/
+        def m = parens =~ /\((.*)\)/
         then:
-        subparens
+        m.matches() && m.groupCount() == 1
+        and:
+        parens.substring(m.start(1), m.end(1)) == '()'
         cleanup:
-        log.info "|{}|", subparens
+        log.info "|{}|", m.matches()
     }
 
     def "should regex pattern operator work with find"() {
