@@ -13,6 +13,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class BalancedByShape implements Balanced {
     Boolean isBalanced(String parens) {
+        //TODO - it works, bus is this a nice one?
         if (parens =~ /[^()]/) {
             throw new IllegalArgumentException()
         }

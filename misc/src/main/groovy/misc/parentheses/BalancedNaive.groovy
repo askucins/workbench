@@ -11,6 +11,11 @@ class BalancedNaive implements Balanced {
         Integer parensLeft = 0
         Integer parensRight = 0
 
+        //TODO - it works, bus is this a nice one?
+        if (parens =~ /[^${PAREN.LEFT}${PAREN.RIGHT})]/) {
+            throw new IllegalArgumentException()
+        }
+
         for (String paren in parens) {
             switch (PAREN.findParen(paren)) {
                 case (PAREN.LEFT):
