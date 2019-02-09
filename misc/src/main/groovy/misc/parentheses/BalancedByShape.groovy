@@ -25,6 +25,7 @@ class BalancedByShape implements Balanced {
         if (parens == '') {
             return true
         } else {
+            // (BS1)BS2 - a loop over the occurrences of ')'
             Integer rightPosition = parens.indexOf(RIGHT.value)
             while (rightPosition > 0) {
                 if (isBalanced(parens.substring(1, rightPosition)) && isBalanced(parens.substring(rightPosition + 1))) {
