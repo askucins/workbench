@@ -2,7 +2,8 @@ package misc.parentheses
 
 import groovy.util.logging.Slf4j
 
-import static Paren.*
+import static misc.parentheses.Paren.RIGHT
+import static misc.parentheses.Paren.consistsOfParensOnly
 
 /*
 ''
@@ -23,9 +24,6 @@ class BalancedByShape implements Balanced {
 
         if (parens == '') {
             return true
-        }
-        if (parens[0] != LEFT.value) {
-            return false
         } else {
             Integer rightPosition = parens.indexOf(RIGHT.value)
             while (rightPosition > 0) {

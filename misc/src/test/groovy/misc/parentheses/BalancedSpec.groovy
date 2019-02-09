@@ -55,5 +55,9 @@ abstract class BalancedSpec extends Specification {
         '(x)'  | 'an expression with balanced parens'
         '(x('  | 'an expression with not balanced parens'
         ')x)'  | 'an expression with not balanced parens'
+        'x)'   | 'an expression with not balanced parens'
+        'x('   | 'an expression with not balanced parens'
+        'x()'  | 'an expression with not balanced parens'
+        'x)('  | 'an expression with not balanced parens'
     }
 }
