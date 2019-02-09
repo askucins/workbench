@@ -1,5 +1,5 @@
 package misc.parentheses
 
-interface Balanced {
-    Boolean isBalanced(String parens)
+trait Balanced {
+    abstract Boolean isBalanced(String parens)
 }

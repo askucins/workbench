@@ -2,6 +2,8 @@ package misc.parentheses
 
 import groovy.util.logging.Slf4j
 
+import static Paren.*
+
 /*
 ''
 '()'
@@ -13,22 +15,24 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class BalancedByShape implements Balanced {
     Boolean isBalanced(String parens) {
-        //TODO - it works, bus is this a nice one?
-        if (parens =~ /[^()]/) {
+
+        // Assumption: only parenthesis are processed further
+        if (!consistsOfParensOnly(parens)) {
             throw new IllegalArgumentException()
         }
+
         if (parens == '') {
             return true
         }
-        if (parens[0] != '(') {
+        if (parens[0] != LEFT.value) {
             return false
         } else {
-            Integer rightPosition = parens.indexOf(')')
+            Integer rightPosition = parens.indexOf(RIGHT.value)
             while (rightPosition > 0) {
                 if (isBalanced(parens.substring(1, rightPosition)) && isBalanced(parens.substring(rightPosition + 1))) {
                     return true
                 } else {
-                    rightPosition = parens.indexOf(')', rightPosition + 1)
+                    rightPosition = parens.indexOf(RIGHT.value, rightPosition + 1)
                 }
             }
             return false

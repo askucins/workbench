@@ -1,26 +1,30 @@
 package misc.parentheses
 
-class Paren {
-    enum PAREN {
-        LEFT('('), RIGHT(')')
 
-        final String parenValue
+enum Paren {
+    LEFT('('), RIGHT(')')
 
-        private PAREN(String parenValue) {
-            this.parenValue = parenValue
-        }
+    final String value
 
-        // Reverse mapping
-        static PARENS = values().collectEntries { entry ->
-            [(entry.parenValue): entry]
-        }
+    private Paren(String value) {
+        this.value = value
+    }
 
-        static PAREN findParen(String parenValue) {
-            if (parenValue == null) {
-                throw new IllegalArgumentException()
-            } else {
-                PARENS[(parenValue)] as PAREN
-            }
+    // Reverse mapping
+    static PARENS = values().collectEntries { entry ->
+        [(entry.value): entry]
+    }
+
+    static Paren findParen(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException()
+        } else {
+            PARENS[(value)] as Paren
         }
     }
+
+    static Boolean consistsOfParensOnly(String parens) {
+        parens ==~ /[${LEFT.value}${RIGHT.value})]*/
+    }
 }
+
