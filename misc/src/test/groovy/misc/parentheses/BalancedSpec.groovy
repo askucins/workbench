@@ -44,7 +44,7 @@ abstract class BalancedSpec extends Specification {
     }
 
     @Unroll
-    def "should throw an exception on invalid argument of(|#parens|) because of (#comment)"() {
+    def "should throw an exception on invalid argument of |#parens| because of #comment"() {
         when:
         balancer.isBalanced(parens)
         then:
