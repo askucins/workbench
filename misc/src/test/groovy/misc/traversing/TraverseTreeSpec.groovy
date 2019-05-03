@@ -13,7 +13,7 @@ class TraverseTreeSpec extends Specification {
                                 f: [:]
                         ],
                         c: [
-                                c: [:],
+                                C: [:],
                                 E: [
                                         q: [:],
                                         e: [:]
@@ -30,7 +30,7 @@ class TraverseTreeSpec extends Specification {
         when:
         TraverseTree.processTree(tree, processor)
         then:
-        processor.accu.sort() == ['c', 'c', 'e', 'f', 'g', 'g']
+        processor.accu.sort() == ['c', 'e', 'f', 'g', 'g']
     }
 
     def "should not find all small letters between 'c' and 'g' in an empty tree"() {
