@@ -49,7 +49,7 @@ class MatchMeSpec extends Specification {
     def "should regex pattern operator work match"() {
         when:
         def full = /.*sheep.*/
-        then: "match operator"
+        then: "validate operator"
         !(meadow1 ==~ full)
         and:
         meadow2 ==~ full
