@@ -3,11 +3,11 @@ package misc.traversing
 import groovy.transform.Canonical
 
 @Canonical
-class Processor {
+class FilteredAccumulator {
     List accu = []
     Closure filter
 
-    def validate(def candidate) {
+    def consume(def candidate) {
         if (filter(candidate)) {
             accu.add(candidate)
         }
