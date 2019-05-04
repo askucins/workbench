@@ -8,7 +8,7 @@ class FilteredAccumulator {
     Closure filter
 
     def consume(def candidate) {
-        if (filter(candidate)) {
+        if (candidate != null && filter(candidate)) {
             accu.add(candidate)
         }
     }

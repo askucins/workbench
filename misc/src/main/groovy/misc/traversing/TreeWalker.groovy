@@ -1,5 +1,5 @@
 package misc.traversing
 
 trait TreeWalker {
-    def processTree(Map tree, FilteredAccumulator accumulator) {}
+    def processTree(TreeNode tree, FilteredAccumulator accumulator) {}
 }

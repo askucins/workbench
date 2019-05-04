@@ -5,16 +5,16 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class TreeWalkerNaive implements TreeWalker {
 
-    def processTree(Map tree, FilteredAccumulator accumulator) {
+    def processTree(TreeNode tree, FilteredAccumulator accumulator) {
         log.debug "Tree: {}", tree as String
-        def head = tree?.keySet() ? tree?.keySet()?.first() : null
-        log.debug "Head: {}", head as String
-        if (head != null) {
-            def tail = tree[(head)]
+        if (tree && !tree.isEmpty()) {
+            def head = tree.value
+            log.debug "Head: {}", head as String
+            def tail = tree.children
             log.debug "Tail: {}", tail as String
             accumulator.consume(head)
             log.debug "Accu: {}", accumulator.accu as String
-            tail?.keySet()?.each { processTree([(it): tail[(it)]] as Map, accumulator) }
+            tail?.each { processTree(it as TreeNode, accumulator) }
         }
     }
 }
