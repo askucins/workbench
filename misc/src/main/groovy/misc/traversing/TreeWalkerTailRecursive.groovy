@@ -7,12 +7,6 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class TreeWalkerTailRecursive implements TreeWalker {
 
-    private static List dfs(List stack, TreeNode head) {
-        log.debug "dfs stack: {}", stack as String
-        log.debug "dfs head: {}", head as String
-        head.children + stack
-    }
-
     private loop(FilteredAccumulator accumulator, List stack) {
         log.debug "Stack: {}", stack as String
         if (stack.size() > 0) {
@@ -23,7 +17,7 @@ class TreeWalkerTailRecursive implements TreeWalker {
             if (head && !head.isEmpty()) {
                 accumulator.consume(head.value)
                 log.debug "Accu: {}", accumulator.accu
-                return loop(accumulator, dfs(tail, head))
+                return loop(accumulator, head.children + tail)
             }
         }
     }
