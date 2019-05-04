@@ -14,4 +14,9 @@ class TreeNode {
     Boolean isEmpty() {
         this.value == null & !hasChildren()
     }
+
+    @Override
+    String toString() {
+        return "{$value:$children}";
+    }
 }

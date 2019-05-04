@@ -52,6 +52,20 @@ abstract class TraverseTreeSpec extends Specification {
         processor.accu.sort() == ['a']
     }
 
+    def "should return a match even when traversing via null values"() {
+        given:
+        def tree = new TreeNode(value: null,
+                children: [
+                        new TreeNode(value: 'b'), new TreeNode(value: 'c',
+                        children: [
+                                new TreeNode(value: null)])])
+        def processor = new FilteredAccumulator(filter: { true })
+        when:
+        treeWalker.processTree(tree, processor)
+        then:
+        processor.accu.sort() == ['b', 'c']
+    }
+
     def "should return all nodes when filter accepts all of them"() {
         given:
         def tree = new TreeNode(value: 'a',
