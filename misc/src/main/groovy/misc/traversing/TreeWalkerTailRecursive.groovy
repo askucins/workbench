@@ -1,5 +1,6 @@
 package misc.traversing
 
+import groovy.transform.TailRecursive
 import groovy.util.logging.Slf4j
 
 // Based on https://stackoverflow.com/questions/38239418/tail-recursive-tree-traversal-without-loops
@@ -7,6 +8,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class TreeWalkerTailRecursive implements TreeWalker {
 
+    @TailRecursive
     private loop(FilteredAccumulator accumulator, List stack) {
         log.debug "Stack: {}", stack as String
         if (stack.size() > 0) {
