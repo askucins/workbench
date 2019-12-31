@@ -4,7 +4,8 @@ plugins {
 
 asciidoctor {
     sources {
-        include 'greeter.adoc'   
+        include 'greeter.adoc'
+        include 'git-tutorial.adoc'
     }
 }
 

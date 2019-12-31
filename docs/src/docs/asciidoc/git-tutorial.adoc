@@ -1,0 +1,364 @@
+= Learning Git
+
+A Git tutorial from https://learngitbranching.js.org[Learning Git]
+
+== Rebase
+
+=== Prerequisite
+
+------------------------------------------------------------------------------------------------
+rm -rf .git; \
+git init; \
+git add .gitignore; \
+git add Readme.md; \
+git commit -m 'c0'; \
+echo '# Intro 4' > intro4.md; \
+git add intro4.md; \
+git commit -m 'c1'; \
+git branch bugFix; \
+echo '# Intro 4 on Master' > intro4onMaster.md; \
+git add intro4onMaster.md; \
+git commit -m 'c2'; \
+git checkout bugFix; \
+echo '# Intro 4 on BugFix' > intro4onBugFix.md; \
+git add intro4onBugFix.md; \
+git commit -m 'c3'; \
+echo 'Ready.'
+------------------------------------------------------------------------------------------------
+
+=== Exercise
+
+* Checkout a new branch named bugFix
+* Commit once
+* Go back to master and commit again
+* Check out bugFix again and rebase onto master
+
+-------------------
+git branch bugFix
+git checkout bugFix
+git commit
+git checkout master
+git commit
+git checkout bugFix
+git rebase master
+-------------------
+
+=== Exercise Full
+
+------------------------------------------------------------------------------------------------
+rm -rf .git; \
+git init; \
+git add .gitignore; \
+git add Readme.md; \
+git commit -m 'c0'; \
+echo '# Intro 4' > intro4.md; \
+git add intro4.md; \
+git commit -m 'c1'; \
+git branch bugFix; \
+git checkout bugFix; \
+echo '# Intro 4 on BugFix' > intro4onBugFix.md; \
+git add intro4onBugFix.md; \
+git commit -m 'c2'; \
+git checkout master; \
+echo '# Intro 4 on Master' > intro4onMaster.md; \
+git add intro4onMaster.md; \
+git commit -m 'c3'; \
+git checkout bugFix; \
+echo 'Ready.'; \
+git rebase master; \
+echo 'Done.'
+------------------------------------------------------------------------------------------------
+
+That would apply a commit c2 onto master:
+
+* on bugFix it will be: `(c0, c1, c3, c2)`
+* on master: `(c0, c1, c3)`
+
+Then you may switch to master and rebase it as well onto bugFix
+
+-------------------
+git checkout master
+git rebase bugFix
+-------------------
+
+That all will end then on `(c0, c1, c3, c2)` in both master and bugFix
+
+== Moving around - detaching HEAD
+
+Example:
+
+* `git log HEAD@{0} -n1` - the last commit
+* `git log HEAD@{1} -n1` - the last but one commit
+
+Usually HEAD points to the branch last commit. However, it can be
+attached to the commit itself.
+
+* before: `HEAD -> bugFix -> C4`
+* then: `git checkout C4`
+* after: `HEAD -> C4`
+
+=== Prerequisites
+
+-----------------------------------------------------------------------------------
+rm -rf .git; \
+git init; \
+git add .gitignore; \
+git add Readme.md; \
+git commit -m 'c0'; \
+echo 'Ready.'
+-----------------------------------------------------------------------------------
+
+=== Exercise
+
+To complete this level, let's detach HEAD from bugFix and attach it to
+the commit instead.
+
+* master `(C0, C1, C2)`
+* bugFix `(C0, C1, C3, C4)`
+* `HEAD -> bugFix`
+
+---------------
+git checkout C4
+---------------
+
+== Relative Refs
+
+* Moving upwards one commit at a time - `^`
+* Moving upwards a number of times - `~<num>`
+
+=== Prerequisites
+
+-----------------------------------------------------------------------------------
+rm -rf .git; \
+git init; \
+git add .gitignore; \
+git add Readme.md; \
+git commit -m 'c0'; \
+echo 'Ready.'
+-----------------------------------------------------------------------------------
+
+=== Exercise
+
+To complete this level, check out the parent commit of bugFix. This will
+detach HEAD.
+
+* master `(C0, C1, C2)`
+* bugFix `(C0, C1, C3, C4)`
+* `HEAD -> master`
+
+--------------------
+git checkout bugFix^
+--------------------
+
+== Branch forcing
+
+Example: `git branch -f master HEAD~3`
+
+Assuming `HEAD -> master` it will rewind master branch by 3 commits
+back. If not it will reset master to a commit which is a parent by three
+commits of HEAD.
+
+=== Exercise
+
+To complete this level, move HEAD, master, and bugFix to their goal
+destinations shown.
+
+Before:
+
+* master `(C0, C1, C2, C4)`
+* bugFix `(C0, C1, C3, C5)`
+* HEAD -> `C2`
+
+After:
+
+* master `(C0, C1, C3, C5, C6)`
+* master -> `C6`
+* bugFix -> `C0`
+* HEAD -> `C1`
+
+=== Solution
+
+-----------------------------
+git checkout C1
+git branch -f bugFix bugFix~3
+git branch -f master C6
+-----------------------------
+
+== Reversing changes
+
+Two basic ways:
+
+* `git reset` - re-writing a history locally (does not work great on a remote content)
+* `git revert` - here reverting changes locally can also be applied to a remote repo
+
+=== Exercise
+
+To complete this level, reverse the most recent commit on both local and
+pushed. You will revert two commits total (one per branch).
+
+Keep in mind that pushed is a remote branch and local is a local branch -
+that should help you choose your methods.
+
+Before:
+
+* master `(C0, C1)`
+* local `(C0, C1, C3)`
+* pushed `(C0, C1, C2)`
+* HEAD -> local
+
+After:
+
+* master `(C0, C1)`
+* local `(C0, C1)`
+* pushed `(C0, C1, C2, C2')`
+
+=== Solution
+
+-------------------
+git reset HEAD^
+git checkout pushed
+git revert HEAD
+-------------------
+
+== Moving work around - cherry-pick
+
+Example: `git cherry-pick <Commit1> <Commit2> <...>`
+
+That would copy a series of commits _below_ the current location (HEAD)
+
+== Moving work around - interactive rebase
+
+Example: when HEAD-> bugFix `git rebase -i master`
+
+That procedure allows you to:
+
+* reorder commits
+* include/omit given commits * squash commits
+
+=== Example
+
+---------------------------------------------------------------
+rm -rf .git; git init; git add .gitignore; git add Readme.md; \
+echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
+echo '# c1' > c1.md; git add c1.md; git commit -m 'c1'; \
+git branch bugFix; \
+git checkout bugFix; \
+echo '# c2' > c2.md; git add c2.md; git commit -m 'c2'; \
+echo '# c3' > c3.md; git add c3.md; git commit -m 'c3'; \
+echo '# c4' > c4.md; git add c4.md; git commit -m 'c4'; \
+git checkout master; \
+echo '# c5' > c5.md; git add c5.md; git commit -m 'c5'; \
+echo '# c6' > c6.md; git add c6.md; git commit -m 'c6'; \
+git checkout bugFix
+---------------------------------------------------------------
+
+Then `git rebase -i master` gives you an option to interactively review
+commits from bugFix and rebased them onto master.
+
+=== Exercise
+
+Before:
+
+* master `(C0, C1, C2, C3, C4, C5)`
+* HEAD -> `master`
+
+After:
+
+* master `(C0, C1, C3', C5', C4')`
+* HEAD -> `master`
+
+== Mixed bag
+
+== Tags
+
+Example: `git tag <tag name> <commit>`
+
+== Specifying parents
+
+=== Example
+
+---------------------------------------------------------------
+rm -rf .git; git init; git add .gitignore; git add Readme.md; \
+echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
+echo '# c1' > c1.md; git add c1.md; git commit -m 'c1'; \
+git branch bugFix; \
+git branch newFeature; \
+git checkout bugFix; \
+echo '# c2' > c2.md; git add c2.md; git commit -m 'c2'; \
+echo '# c3' > c3.md; git add c3.md; git commit -m 'c3'; \
+echo '# c4' > c4.md; git add c4.md; git commit -m 'c4'; \
+git checkout master; \
+echo '# c5' > c5.md; git add c5.md; git commit -m 'c5'; \
+echo '# c6' > c6.md; git add c6.md; git commit -m 'c6'; \
+git checkout newFeature; \
+echo '# c7' > c7.md; git add c7.md; git commit -m 'c7'; \
+echo '# c8' > c8.md; git add c8.md; git commit -m 'c8'; \
+git checkout master; \
+echo 'Merging...'; \
+git merge bugFix; \
+git merge newFeature; \
+echo 'Done!'
+---------------------------------------------------------------
+
+Before the merges:
+
+* master `(C0, C1, C5, C6)`
+* bugFix `(C0, C1, C2, C3, C4)`
+* newFeature `(C0, C1, C7, C8)`
+
+After the merges:
+
+* master `(C0, C1, C5, C6, Mbf, Mnf)`
+* bugFix `(C0, C1, C2, C3, C4)`
+* newFeature `(C0, C1, C7, C8)`
+* HEAD -> master -> Mnf
+
+So we have this (master branch to which bugFix and NewFeature have been
+merged):
+
+* `git log HEAD^0~0 -n1` -> Mnf
+* `git log HEAD^0~1 -n1` -> Mbf
+* `git log HEAD^0~2 -n1` -> C6
+* `git log HEAD^0~3 -n1` -> C5
+* `git log HEAD^0~4 -n1` -> C1
+* `git log HEAD^0~5 -n1` -> C0
+
+And this (please notice we're still on the first branch!):
+
+* `git log HEAD^1~0 -n1` -> Mbf
+* `git log HEAD^1~1 -n1` -> C6
+* `git log HEAD^1~2 -n1` -> C5
+* `git log HEAD^1~3 -n1` -> C1
+* `git log HEAD^1~4 -n1` -> C0
+
+And this (on the newFeature branch - it was merged as the second)
+
+* `git log HEAD^2~0 -n1` -> C8
+* `git log HEAD^2~1 -n1` -> C7
+* `git log HEAD^2~2 -n1` -> C1
+* `git log HEAD^2~3 -n1` -> C0
+
+To get to the bugFix branch one needs to be a little smarter:
+
+* `git log HEAD^~0 -n1` -> Mbf
+* `git log HEAD^^~0 -n1` -> C6
+* `git log HEAD^^1~0 -n1` -> C6
+* `git log HEAD^^1 -n1` -> C6
+* `git log HEAD^^ -n1` -> C6
+
+But:
+
+* `git log HEAD^^2 -n1` -> C4
+* `git log HEAD^1^2~0 -n1` -> C4
+* `git log HEAD^^2~0 -n1` -> C4
+* `git log HEAD^^2~1 -n1` -> C3
+* `git log HEAD^^2~2 -n1` -> C2
+* `git log HEAD^^2~3 -n1` -> C1
+* `git log HEAD^^2~4 -n1` -> C0
+
+== Branch Spaghetti
+
+----------------------
+git branch -f three C2
+----------------------
+
