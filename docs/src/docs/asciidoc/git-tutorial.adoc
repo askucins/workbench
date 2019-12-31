@@ -380,3 +380,21 @@ git branch -f three C2
 
 IMPORTANT: `git fetch` essentially brings our _local_ representation of the remote repository
 into synchronization with what the _actual_ remote repository looks like (right now).
+
+== Pull
+
+There are more ways to apply those fetched commits to one's local repo.
+For example, while being on local master branch:
+
+* `git cherry-pick o/master`
+* `git rebase o/master`
+* `git merge o/master`
+* etc. etc.
+
+`git pull` is a shortcut for _fetch_ and _merge_.
+
+== Push
+
+
+[.text-right]
+&#x2B1B;
