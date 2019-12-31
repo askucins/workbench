@@ -2,10 +2,13 @@
 
 A Git tutorial from https://learngitbranching.js.org[Learning Git]
 
+TIP: For a quick reference of AsciiDoc see https://asciidoctor.org/docs/asciidoc-syntax-quick-reference[AsciiDoc Syntax Quick Reference]
+
 == Rebase
 
 === Prerequisite
 
+[source, bash]
 ------------------------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -33,6 +36,7 @@ echo 'Ready.'
 * Go back to master and commit again
 * Check out bugFix again and rebase onto master
 
+[source, bash]
 -------------------
 git branch bugFix
 git checkout bugFix
@@ -45,6 +49,7 @@ git rebase master
 
 === Exercise Full
 
+[source, bash]
 ------------------------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -76,6 +81,7 @@ That would apply a commit c2 onto master:
 
 Then you may switch to master and rebase it as well onto bugFix
 
+[source, bash]
 -------------------
 git checkout master
 git rebase bugFix
@@ -99,6 +105,7 @@ attached to the commit itself.
 
 === Prerequisites
 
+[source, bash]
 -----------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -117,6 +124,7 @@ the commit instead.
 * bugFix `(C0, C1, C3, C4)`
 * `HEAD -> bugFix`
 
+[source, bash]
 ---------------
 git checkout C4
 ---------------
@@ -128,6 +136,7 @@ git checkout C4
 
 === Prerequisites
 
+[source, bash]
 -----------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -146,6 +155,7 @@ detach HEAD.
 * bugFix `(C0, C1, C3, C4)`
 * `HEAD -> master`
 
+[source, bash]
 --------------------
 git checkout bugFix^
 --------------------
@@ -178,6 +188,7 @@ After:
 
 === Solution
 
+[source, bash]
 -----------------------------
 git checkout C1
 git branch -f bugFix bugFix~3
@@ -214,6 +225,7 @@ After:
 
 === Solution
 
+[source, bash]
 -------------------
 git reset HEAD^
 git checkout pushed
@@ -237,6 +249,7 @@ That procedure allows you to:
 
 === Example
 
+[source, bash]
 ---------------------------------------------------------------
 rm -rf .git; git init; git add .gitignore; git add Readme.md; \
 echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
@@ -277,6 +290,7 @@ Example: `git tag <tag name> <commit>`
 
 === Example
 
+[source, bash]
 ---------------------------------------------------------------
 rm -rf .git; git init; git add .gitignore; git add Readme.md; \
 echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
@@ -362,3 +376,7 @@ But:
 git branch -f three C2
 ----------------------
 
+== Fetch
+
+IMPORTANT: `git fetch` essentially brings our _local_ representation of the remote repository
+into synchronization with what the _actual_ remote repository looks like (right now).
