@@ -468,6 +468,29 @@ where source and destination may indeed be different locations.
 * HEAD -> foo
 * remote master `(C0, C1, C2)`
 
+== Fetch arguments
+
+* `git fetch origin foo` - from remote `foo` to local `origin/foo`
+* `git push <remote> <source>:<destination>` - only here the `source` is on the remote location and `destination` is local.
+
+== Empty source in fetch and push
+
+* `git push origin :side` - that will delete remote `side` and local `origin/foo`
+* `git fetch origin :bugFix` - that will create a new local branch `bugFix`
+
+== Pull arguments
+
+* `git pull origin foo` is the same as:
+* `git fetch origin foo; git merge origin/foo` and that's because it's really this:
+* `git fetch origin foo:origin/foo; git merge origin/foo` - and that's why the source location in the merge
+is the destination location from the pull.
+And the destination in that merge is whatever branch which is currently checked out.
+
+Another example:
+* `git pull origin bar~1:bugFix` is in fact:
+* `git fetch origin bar~1:bugFix; git merge bugFix`
+
+
 
 '''
 [.text-right]
