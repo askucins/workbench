@@ -487,6 +487,7 @@ is the destination location from the pull.
 And the destination in that merge is whatever branch which is currently checked out.
 
 Another example:
+
 * `git pull origin bar~1:bugFix` is in fact:
 * `git fetch origin bar~1:bugFix; git merge bugFix`
 
