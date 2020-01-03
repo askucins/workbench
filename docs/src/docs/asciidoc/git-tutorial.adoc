@@ -1,6 +1,6 @@
-= Learning Git
+= Learning Git - notes
 
-A Git tutorial from https://learngitbranching.js.org[Learning Git]
+Notes on a Git tutorial from https://learngitbranching.js.org[Learning Git]
 
 TIP: For a quick reference of AsciiDoc see https://asciidoctor.org/docs/asciidoc-syntax-quick-reference[AsciiDoc Syntax Quick Reference]
 
@@ -395,6 +395,80 @@ For example, while being on local master branch:
 
 == Push
 
+=== Before doing a push...
+If there is a more recent work on the remote branch
+you may either fetch it and merge or fetch it and rebase.
+The final trees will be slightly different, but the actual result will be the same:
 
+* `git fetch; git rebase origin/master; git push`
+* `git fetch; git merge origin/master; git push`
+
+There is a shorthand for the first one: `git pull --rebase` - that would fetch and rebase.
+For fetch'n'merge we have a regular `git pull` obviously...
+
+== Merging feature branches
+
+=== Exercise
+. There are three feature branches -- side1 side2 and side3.
+. We want to push each one of these features, in order, to the remote.
+. The remote has since been updated, so we will need to incorporate that work as well.
+
+
+== Rebasing vs Merging
+
+****
+* Pros: Rebasing makes your commit tree look very clean since everything is in a straight line
+* Cons: Rebasing modifies the (apparent) history of the commit tree.
+****
+
+== Remote-Tracking branches
+
+* Way 1: `git checkout -b new-whatever-branch origin/master`
+* Way 2: `git branch -u origin/master foo` (or `git branch -u origin/master` if `foo` is currently checked out)
+
+
+== Push arguments
+
+`git push <remote> <place>`
+
+means:
+====
+Go to the branch named "master" in my repository, grab all the commits,
+and then go to the branch "master" on the remote named "origin".
+Place whatever commits are missing on that branch and then tell me when you're done.
+====
+
+NOTE: This is done no matter what is the currently checked out branch!
+
+Actually this `git push origin master` is a shorthand for `git push origin master:master` -
+this, however suggests, that there is a more generic command:
+
+`git push <remote> <source>:<destination>`
+
+where source and destination may indeed be different locations.
+
+=== Example
+
+==== Before
+
+* local master `(C0, C1)`
+* local origin/master `(C0, C1)`
+* local foo `(C0, C1, C2, C3)`
+* HEAD -> foo
+* remote master `(C0, C1)`
+
+==== Command
+`git push origin foo^:master`
+
+==== After
+
+* local master `(C0, C1)`
+* local origin/master `(C0, C1, C2)`
+* local foo `(C0, C1, C2, C3)`
+* HEAD -> foo
+* remote master `(C0, C1, C2)`
+
+
+'''
 [.text-right]
 &#x2B1B;
