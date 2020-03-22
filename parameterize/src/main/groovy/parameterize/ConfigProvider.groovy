@@ -1,0 +1,3 @@
+package parameterize
+class ConfigProvider {
+}
