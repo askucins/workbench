@@ -35,5 +35,4 @@ abstract class ParameterizeSpec extends Specification {
         instance = config
     }
 
-
 }
