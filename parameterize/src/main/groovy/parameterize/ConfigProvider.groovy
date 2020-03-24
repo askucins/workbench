@@ -24,6 +24,6 @@ class ConfigProvider {
     }
 
     static void reset() {
-        envs = ConfigProvider.env.values().sort { it.id }.iterator()
+        envs = returnIterator()
     }
 }
