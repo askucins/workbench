@@ -33,4 +33,5 @@ class ParameterizeByTestSuiteSpec {
     }
 
     // TODO what would be nice is to have that list of classes generated on the fly though...
+    // FIXME this stopped working after switching to groovy3 (and related spock and junit platform)
 }
