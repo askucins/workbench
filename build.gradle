@@ -11,6 +11,16 @@ allprojects {
     repositories {
         jcenter()
     }
+
+    /*
+    Inspired by https://solidsoft.wordpress.com/2014/11/13/gradle-tricks-display-dependencies-for-all-subprojects-in-multi-project-build/
+
+    For example:
+    gw allDeps --configuration implementation
+    gw allDeps --configuration testImplementation
+    gw allDeps --configuration api
+ */
+    task allDeps(type: DependencyReportTask) {}
 }
 
 subprojects {
