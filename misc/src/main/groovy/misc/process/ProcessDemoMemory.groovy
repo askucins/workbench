@@ -14,7 +14,7 @@ class ProcessDemoMemory {
 
     static void main(String... args) throws Exception {
 
-        Runtime r = Runtime.getRuntime();
+        Runtime r = Runtime.getRuntime()
         println "No of Processor: ${r.availableProcessors()}"
         println ""
 
@@ -26,7 +26,7 @@ class ProcessDemoMemory {
         println "::Memory status::after objects generation"
         printMemoryReport(r)
 
-        r.gc();
+        r.gc()
 
         println "::Memory status::after GC run"
         printMemoryReport(r)

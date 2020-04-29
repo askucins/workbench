@@ -5,7 +5,7 @@
 
 */
 if (init)
-    data = "";
+    data = ""
 
 if (line.size() > 0) {
     data += line + "\n"

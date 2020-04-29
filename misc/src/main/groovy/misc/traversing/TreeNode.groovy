@@ -17,6 +17,6 @@ class TreeNode {
 
     @Override
     String toString() {
-        return "{$value:$children}";
+        return "{$value:$children}"
     }
 }

@@ -10,6 +10,6 @@ class ProcessDemoExec {
         Runtime r = Runtime.getRuntime()
         Process p = r.exec("firefox")
         p.waitFor(10, TimeUnit.SECONDS)
-        p.destroy();
+        p.destroy()
     }
 }
