@@ -1,7 +1,7 @@
 // To run in Intellij add this module/jar as a dependency: org.apache.ivy:ivy:[version]
 // To get it installed: grape install org.apache.ivy ivy 2.5.0
 @Grapes([
-        @Grab("org.gebish:geb-core:3.3"),
+        @Grab("org.gebish:geb-core:3.4"),
         //@Grab("org.seleniumhq.selenium:selenium-firefox-driver:4.0.0-alpha-4"),
         @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-4"),
         @Grab("org.seleniumhq.selenium:selenium-support:4.0.0-alpha-4"),
