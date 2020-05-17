@@ -20,10 +20,10 @@ import geb.Browser
 System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/81.0.4044.138/chromedriver_linux64/cw2ad4f0dy1a6ngf4tmo5n56p/chromedriver')
 
 Browser.drive {
-    go "http://gebish.org"
+    go "https://gebish.org"
     assert title == "Geb - Very Groovy Browser Automation"
 }.quit()
 
-System.setProperty('webdriver.chrome.driver', '')
+System.setProperty('webdriver.chrome.driver', null)
 
 println 'Done!'
