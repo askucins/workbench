@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 
 @RunWith(Enclosed)
 @Slf4j
-class ParameterizeByTestSuiteSpec {
+class ParameterizeByTestSuite {
 
     @BeforeClass
     static void resetConfig() {
