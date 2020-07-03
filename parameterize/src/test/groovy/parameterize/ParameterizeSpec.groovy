@@ -33,6 +33,20 @@ abstract class ParameterizeSpec extends Specification {
         where:
         attempt << (0..1)
         instance = config
+
+    }
+
+    @Unroll
+    def "should fail on PROD env (#instance.id, #attempt)"() {
+        expect:
+        (instance.id == ConfigProvider.env.prod.id)
+            ? instance.label.startsWith('XThis is')
+            : instance.label.startsWith('This is')
+        cleanup:
+        log.info "Fail on PROD: {}", instance.label
+        where:
+        attempt << (0..1)
+        instance = config
     }
 
 }

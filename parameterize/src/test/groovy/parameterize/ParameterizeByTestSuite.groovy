@@ -1,32 +1,33 @@
 package parameterize
 
 import groovy.util.logging.Slf4j
-import org.junit.BeforeClass
-import org.junit.experimental.runners.Enclosed
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 
-@RunWith(Enclosed)
 @Slf4j
 class ParameterizeByTestSuite {
 
-    @BeforeClass
+    @BeforeEach
     static void resetConfig() {
         ConfigProvider.reset()
     }
 
-    static class RunInProdSpec extends ParameterizeSpec {
+    @Nested
+    class RunInProdSpec extends ParameterizeSpec {
         def setupSpec() {
             config = ConfigProvider.env.prod
         }
     }
 
-    static class Run01Spec extends ParameterizeSpec {
+    @Nested
+    class Run01Spec extends ParameterizeSpec {
         def setupSpec() {
             config = ConfigProvider.next()
         }
     }
 
-    static class Run02Spec extends ParameterizeSpec {
+    @Nested
+    class Run02Spec extends ParameterizeSpec {
         def setupSpec() {
             config = ConfigProvider.next()
         }
