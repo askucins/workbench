@@ -10,7 +10,6 @@
     @Grab("org.gebish:geb-core:3.4"),
     @Grab("org.gebish:geb-spock:3.4"),
     @Grab("org.spockframework:spock-core:2.0-M3-groovy-3.0"),
-    @Grab("org.spockframework:spock-junit4:2.0-M3-groovy-3.0"),
     @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-6"),
     //@Grab("org.seleniumhq.selenium:selenium-firefox-driver:4.0.0-alpha-6"),
     @GrabExclude("org.codehaus.groovy:groovy-xml"),
@@ -27,13 +26,14 @@ import geb.Browser
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
 import spock.util.environment.RestoreSystemProperties
+//import spock.lang.Ignore
 
 @RestoreSystemProperties
 class GebReportingSmokeSpec extends GebReportingSpec {
 
     def setupSpec() {
         System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/85.0.4183.38/chromedriver_linux64/6h50nn75cxnis2g4ls5ycnvgk/chromedriver')
-        System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.26.0/geckodriver-v0.26.0-linux64.tar/d873k1x1c8078m6sc0ysb8ijy/geckodriver')
+        System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.27.0/geckodriver-v0.27.0-linux64.tar/5qh0ei3isy5x1vjh8hd5x98eq/geckodriver')
     }
 
     def setup() {

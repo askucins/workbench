@@ -1,0 +1,128 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+plugins {
+    id 'com.github.erdi.webdriver-binaries' version '2.2'
+    id 'com.github.erdi.idea-base' version '2.2'
+}
+
+ext {
+    // GebConfig environments
+    drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare']
+    defaultDriver = 'chromeHeadless'
+    ext {
+        gebVersion = '3.4'
+        webdriverVersion = '4.0.0-alpha-6'
+        chromeDriverVersion = {
+            (project.findProperty('qa.chromium') != null)
+                ? '84.0.4147.30'
+                : '85.0.4183.38'
+            //TODO this doesn't work right now !!
+        }()
+        geckoDriverVersion = '0.26.0'
+    }
+}
+
+dependencies {
+    implementation 'io.netty:netty-buffer:4.1.51.Final'
+
+    implementation "org.gebish:geb-core:${gebVersion}"
+    testImplementation "org.gebish:geb-spock:${gebVersion}"
+    implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}"
+
+    //TODO It still throws an error...
+    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+        transitive = false
+    }
+
+    // Proxy https://github.com/browserup/browserup-proxy
+    def versionBrowserUp = '2.1.1'
+    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // Proxy https://github.com/mrog/LittleProxy
+    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
+
+}
+
+tasks.withType(Test) {
+    systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
+    systemProperty 'geb.build.reportsDir', 'reports'
+
+    testLogging {
+        showStandardStreams = true
+        events 'passed', 'failed'
+        exceptionFormat 'full'
+
+        debug {
+            events 'passed', 'skipped', 'failed'
+            showStackTraces true
+            exceptionFormat 'full'
+        }
+    }
+    useJUnitPlatform()
+}
+
+webdriverBinaries {
+    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
+    chromedriver {
+        version = chromeDriverVersion
+        fallbackTo32Bit = true
+    }
+    geckodriver geckoDriverVersion
+}
+
+task refreshWebdriverConfiguration {
+    group = 'other'
+    description = 'refreshes configuration of webdriver binaries'
+
+    def slurper = new JsonSlurper()
+    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
+    try {
+        def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
+        def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
+        def webdriverJson = new File(projectDir, 'webdriver.json')
+        webdriverJson.delete()
+        webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
+    } catch (e) {
+        logger.error("Unable to refresh webdriver versions configuration!")
+        logger.error(e.asString())
+    }
+}
+
+task cleanReports(type: Delete) {
+    group = 'other'
+    description = 'removes geb reports'
+    delete 'reports'
+}
+
+task removeWebdriverInstances() {
+    group = 'other'
+    description = 'removes hanging instances of webdriver'
+
+    def doRemoveWebdriverInstances = {
+        exec {
+            ignoreExitValue true
+            commandLine "pgrep", "-f", "webdriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pgrep", "-f", "chromedriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "webdriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "chromedriver"
+        }
+    }
+
+    doLast {
+        doRemoveWebdriverInstances()
+    }
+}

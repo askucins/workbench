@@ -32,7 +32,7 @@ subprojects {
 // That configure(...) is useful when one needs to apply it only to a subset of subprojects.
 
 configure(subprojects.findAll {
-    ['fun-with-groovy', 'run-me', 'misc', 'grokalg','parameterize'].contains(it.name)
+    ['fun-with-groovy', 'geb-bare-bone', 'grokalg', 'misc', 'parameterize', 'run-me'].contains(it.name)
 }) {
     apply plugin: 'groovy'
 

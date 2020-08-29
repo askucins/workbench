@@ -23,7 +23,7 @@
 import geb.Browser
 
 System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/85.0.4183.38/chromedriver_linux64/6h50nn75cxnis2g4ls5ycnvgk/chromedriver')
-System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.26.0/geckodriver-v0.26.0-linux64.tar/d873k1x1c8078m6sc0ysb8ijy/geckodriver')
+System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.27.0/geckodriver-v0.27.0-linux64.tar/5qh0ei3isy5x1vjh8hd5x98eq/geckodriver')
 
 Browser.drive {
     go "https://gebish.org"
