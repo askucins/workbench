@@ -6,4 +6,8 @@ class IntroSpec extends Specification {
 		expect:
 		Intro.intro() == 'Hello, world!'
 	}
+	def "should not non-intro work"() {
+		expect:
+		Intro.intro() == 'Hello, alamakota!'
+	}
 }
