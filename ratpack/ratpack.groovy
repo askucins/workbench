@@ -22,6 +22,9 @@ ratpack {
 				post {
 					render "POST stuff"
 				}
+                put {
+                    render "PUST stuff"
+                }
 			}
 		}
 	}
