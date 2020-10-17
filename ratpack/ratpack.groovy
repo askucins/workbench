@@ -14,6 +14,9 @@ ratpack {
 			def name = pathTokens.id ?: "world"
 			response.send "Hello $name"
 		}
+		post("bar/:id?") {
+			response.send "TBC"
+		}
 		path('stuff') {
 			byMethod {
 				get {
@@ -23,9 +26,23 @@ ratpack {
 					render "POST stuff"
 				}
                 put {
-                    render "PUST stuff"
+                    render "PUST stuff aa"
                 }
 			}
 		}
+        prefix("products") {
+            get("list") {
+                render "Product list"
+            }
+            get("search") {
+                render "Product search"
+            }
+            get("get"){
+                render "Product get"
+            }
+            get("all") {
+                render "Product all"
+            }
+        }
 	}
 }
