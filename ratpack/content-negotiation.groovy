@@ -23,9 +23,52 @@ ratpack {
 	handlers {
 		get("users") {
 			byContent {	
-				html {}
-				json {}
-				xml {}
+				html {
+					def usersHtml = users.collect { user -> """\
+						|<div>
+						|<b>Username:</b>${user.username}
+						|<b>Email:</b> ${user.email}
+						|</div>""".stripMargin()
+					}.join()
+
+					render  """\
+						|<!DOCTYPE html>
+						|<html>
+						|<head>
+						|<title>User List</title>
+						|</head>
+						|<body>
+						|<h1>Users</h1>
+						|${usersHtml}
+						|</body>
+						|</html>""".stripMargin()
+				}
+				json {
+					render toJson(users)
+				}
+				xml {
+					def xmlStrings = users.collect { user -> """
+						<user>
+						<username>${user.username}</username>
+						<email>${user.email}</email>
+						</user>
+						""".toString().stripIndent()
+					}.join()
+
+					render "<users>${xmlStrings}</users>"
+				}
+				type("application/vnd.app.custom+json") {
+					render toJson([ 
+						some_custom_data: "my custom data", 
+						type: "custom-users", 
+						users:  users 
+					])
+				}
+				//noMatch {
+				//	response.status 400
+				//	render "negotation not possible"
+				//}
+				noMatch "application/json"
 			}
 		}
 	}
