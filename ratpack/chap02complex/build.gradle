@@ -49,4 +49,18 @@ dependencies {
   //testImplementation 'org.junit.platform:junit-platform-testkit:1.7.0-RC1'
 }
 
+tasks.withType(Test) {
+  useJUnitPlatform()
+
+  testLogging {
+    events 'passed', 'failed'
+    exceptionFormat 'short'
+
+    debug {
+      events 'passed', 'skipped', 'failed'
+      showStackTraces true
+      exceptionFormat 'full'
+    }
+  }
+}
 
