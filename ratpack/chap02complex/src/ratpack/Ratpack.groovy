@@ -1,6 +1,5 @@
 import static ratpack.groovy.Groovy.ratpack
 
-import chap02complex.DefaultRouteHandler
 import chap02complex.UserAgentVersioningHandler
 
 ratpack {
