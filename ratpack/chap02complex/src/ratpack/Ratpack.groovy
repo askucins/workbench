@@ -9,6 +9,7 @@ ratpack {
   handlers {
     get(DefaultRouteHandler)
     get("hello", DefaultRouteHandler)
+    get("hello/:name", DefaultRouteHandler)
   } 
 }
 
