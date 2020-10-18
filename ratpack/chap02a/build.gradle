@@ -12,6 +12,8 @@ apply plugin: "io.ratpack.ratpack-groovy"
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "idea"
 
+mainClassName = 'chap02a.Main'
+
 wrapper {
     gradleVersion = '6.7'
     distributionType = Wrapper.DistributionType.ALL
@@ -32,17 +34,17 @@ dependencies {
 
   // Groovy 2.x for now b/c that error of 'verifier'
 
-  implementation 'org.codehaus.groovy:groovy-all:2.5.13'
-  testImplementation 'org.spockframework:spock-core:2.0-M3-groovy-2.5', {
-    exclude module: 'groovy-all'
-  }
+  //implementation 'org.codehaus.groovy:groovy-all:2.5.13'
+  //testImplementation 'org.spockframework:spock-core:2.0-M3-groovy-2.5', {
+  //  exclude module: 'groovy-all'
+  //}
 
   // Groovy 3.x
 
-  //implementation 'org.codehaus.groovy:groovy-all:3.0.6'
-  //testImplementation 'org.spockframework:spock-core:2.0-M3-groovy-3.0', {
-  //  exclude module: 'groovy-all'
-  //}
+  implementation 'org.codehaus.groovy:groovy-all:3.0.6'
+  testImplementation 'org.spockframework:spock-core:2.0-M3-groovy-3.0', {
+    exclude module: 'groovy-all'
+  }
   //Temporary workaround for JUnit 4 rules
   //testImplementation 'org.spockframework:spock-junit4:2.0-M3-groovy-3.0' 
   // New Junit...
