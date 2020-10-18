@@ -6,6 +6,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-dispatch'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
@@ -20,6 +21,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-syntastic/syntastic'
+Plug 'vim-test/vim-test'
 
 call plug#end()
 
