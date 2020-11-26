@@ -6,11 +6,15 @@ import ratpack.handling.Context
 
 @Canonical
 class DefaultRouteHandler implements Handler {
-    String message
+    String defaultMessage
 
     @Override
     void handle (Context context) {
-        context.render message
+        if (context.pathTokens.containsKey('name')) {
+            context.render "Hello, ${context.pathTokens.name}!"
+        } else {
+            context.render defaultMessage
+        }
     }
 }
 

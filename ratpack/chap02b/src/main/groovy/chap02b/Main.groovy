@@ -9,10 +9,14 @@ class Main {
             .registryOf({ bnd -> bnd
                 .add(new DefaultRouteHandler("Hello, world!!"))
             })
+            //.handlers(Groovy.chain {
+            //    get {
+            //        render "Hello, world!"
+            //    }
+            //})
             .handlers(Groovy.chain {
-                get {
-                    render "Hello, world!"
-                }
+                get(DefaultRouteHandler)
+                get(":name", DefaultRouteHandler)
             })
         }        
     }
