@@ -9,10 +9,10 @@ ratpack {
   handlers {
     all(new UserAgentVersioningHandler())
 
-    get("foo") {
-      logger.info "User Agent: {}", request.headers.get("User-Agent")
-      render "bar of ${ClientVersion.V1}:${ClientVersion.V1.version}"
-    }
+    //get("foo") {
+    //  logger.info "User Agent: {}", request.headers.get("User-Agent")
+    //  render "bar of ${ClientVersion.V1}:${ClientVersion.V1.version}"
+    //}
 
     get("api") { ClientVersion clientVersion ->
       logger.info "CV: {}", clientVersion
