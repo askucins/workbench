@@ -12,7 +12,7 @@ ext {
     drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare']
     defaultDriver = 'chromeHeadless'
     ext {
-        gebVersion = '3.4'
+        gebVersion = '3.4.1' // 4.0-rc-1 - resetBrowser in GebTestManager'
         webdriverVersion = '4.0.0-alpha-6'
         chromeDriverVersion = {
             (project.findProperty('qa.chromium') != null)
