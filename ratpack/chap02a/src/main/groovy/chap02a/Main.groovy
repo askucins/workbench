@@ -1,7 +1,7 @@
 package chap02a
 
-import ratpack.groovy.Groovy 
-import ratpack.server.RatpackServer 
+import ratpack.groovy.Groovy
+import ratpack.server.RatpackServer
 
 
 class Main {
@@ -12,7 +12,7 @@ class Main {
                     render "Hello, world!"
                 }
             })
-        }        
+        }
     }
 }
 

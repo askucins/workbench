@@ -8,7 +8,7 @@ TIP: For a quick reference of AsciiDoc see https://asciidoctor.org/docs/asciidoc
 
 === Prerequisite
 
-[source, bash]
+[source,bash]
 ------------------------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -36,7 +36,7 @@ echo 'Ready.'
 * Go back to master and commit again
 * Check out bugFix again and rebase onto master
 
-[source, bash]
+[source,bash]
 -------------------
 git branch bugFix
 git checkout bugFix
@@ -49,7 +49,7 @@ git rebase master
 
 === Exercise Full
 
-[source, bash]
+[source,bash]
 ------------------------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -81,7 +81,7 @@ That would apply a commit c2 onto master:
 
 Then you may switch to master and rebase it as well onto bugFix
 
-[source, bash]
+[source,bash]
 -------------------
 git checkout master
 git rebase bugFix
@@ -96,8 +96,8 @@ Example:
 * `git log HEAD@{0} -n1` - the last commit
 * `git log HEAD@{1} -n1` - the last but one commit
 
-Usually HEAD points to the branch last commit. However, it can be
-attached to the commit itself.
+Usually HEAD points to the branch last commit.
+However, it can be attached to the commit itself.
 
 * before: `HEAD -> bugFix -> C4`
 * then: `git checkout C4`
@@ -105,7 +105,7 @@ attached to the commit itself.
 
 === Prerequisites
 
-[source, bash]
+[source,bash]
 -----------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -117,14 +117,13 @@ echo 'Ready.'
 
 === Exercise
 
-To complete this level, let's detach HEAD from bugFix and attach it to
-the commit instead.
+To complete this level, let's detach HEAD from bugFix and attach it to the commit instead.
 
 * master `(C0, C1, C2)`
 * bugFix `(C0, C1, C3, C4)`
 * `HEAD -> bugFix`
 
-[source, bash]
+[source,bash]
 ---------------
 git checkout C4
 ---------------
@@ -136,7 +135,7 @@ git checkout C4
 
 === Prerequisites
 
-[source, bash]
+[source,bash]
 -----------------------------------------------------------------------------------
 rm -rf .git; \
 git init; \
@@ -148,14 +147,14 @@ echo 'Ready.'
 
 === Exercise
 
-To complete this level, check out the parent commit of bugFix. This will
-detach HEAD.
+To complete this level, check out the parent commit of bugFix.
+This will detach HEAD.
 
 * master `(C0, C1, C2)`
 * bugFix `(C0, C1, C3, C4)`
 * `HEAD -> master`
 
-[source, bash]
+[source,bash]
 --------------------
 git checkout bugFix^
 --------------------
@@ -164,14 +163,12 @@ git checkout bugFix^
 
 Example: `git branch -f master HEAD~3`
 
-Assuming `HEAD -> master` it will rewind master branch by 3 commits
-back. If not it will reset master to a commit which is a parent by three
-commits of HEAD.
+Assuming `HEAD -> master` it will rewind master branch by 3 commits back.
+If not it will reset master to a commit which is a parent by three commits of HEAD.
 
 === Exercise
 
-To complete this level, move HEAD, master, and bugFix to their goal
-destinations shown.
+To complete this level, move HEAD, master, and bugFix to their goal destinations shown.
 
 Before:
 
@@ -188,7 +185,7 @@ After:
 
 === Solution
 
-[source, bash]
+[source,bash]
 -----------------------------
 git checkout C1
 git branch -f bugFix bugFix~3
@@ -204,11 +201,10 @@ Two basic ways:
 
 === Exercise
 
-To complete this level, reverse the most recent commit on both local and
-pushed. You will revert two commits total (one per branch).
+To complete this level, reverse the most recent commit on both local and pushed.
+You will revert two commits total (one per branch).
 
-Keep in mind that pushed is a remote branch and local is a local branch -
-that should help you choose your methods.
+Keep in mind that pushed is a remote branch and local is a local branch - that should help you choose your methods.
 
 Before:
 
@@ -225,7 +221,7 @@ After:
 
 === Solution
 
-[source, bash]
+[source,bash]
 -------------------
 git reset HEAD^
 git checkout pushed
@@ -249,7 +245,7 @@ That procedure allows you to:
 
 === Example
 
-[source, bash]
+[source,bash]
 ---------------------------------------------------------------
 rm -rf .git; git init; git add .gitignore; git add Readme.md; \
 echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
@@ -265,8 +261,7 @@ echo '# c6' > c6.md; git add c6.md; git commit -m 'c6'; \
 git checkout bugFix
 ---------------------------------------------------------------
 
-Then `git rebase -i master` gives you an option to interactively review
-commits from bugFix and rebased them onto master.
+Then `git rebase -i master` gives you an option to interactively review commits from bugFix and rebased them onto master.
 
 === Exercise
 
@@ -290,7 +285,7 @@ Example: `git tag <tag name> <commit>`
 
 === Example
 
-[source, bash]
+[source,bash]
 ---------------------------------------------------------------
 rm -rf .git; git init; git add .gitignore; git add Readme.md; \
 echo '# c0' > c0.md; git add c0.md; git commit -m 'c0'; \
@@ -327,8 +322,7 @@ After the merges:
 * newFeature `(C0, C1, C7, C8)`
 * HEAD -> master -> Mnf
 
-So we have this (master branch to which bugFix and NewFeature have been
-merged):
+So we have this (master branch to which bugFix and NewFeature have been merged):
 
 * `git log HEAD^0~0 -n1` -> Mnf
 * `git log HEAD^0~1 -n1` -> Mbf
@@ -378,8 +372,7 @@ git branch -f three C2
 
 == Fetch
 
-IMPORTANT: `git fetch` essentially brings our _local_ representation of the remote repository
-into synchronization with what the _actual_ remote repository looks like (right now).
+IMPORTANT: `git fetch` essentially brings our _local_ representation of the remote repository into synchronization with what the _actual_ remote repository looks like (right now).
 
 == Pull
 
@@ -396,8 +389,8 @@ For example, while being on local master branch:
 == Push
 
 === Before doing a push...
-If there is a more recent work on the remote branch
-you may either fetch it and merge or fetch it and rebase.
+
+If there is a more recent work on the remote branch you may either fetch it and merge or fetch it and rebase.
 The final trees will be slightly different, but the actual result will be the same:
 
 * `git fetch; git rebase origin/master; git push`
@@ -409,10 +402,10 @@ For fetch'n'merge we have a regular `git pull` obviously...
 == Merging feature branches
 
 === Exercise
+
 . There are three feature branches -- side1 side2 and side3.
 . We want to push each one of these features, in order, to the remote.
 . The remote has since been updated, so we will need to incorporate that work as well.
-
 
 == Rebasing vs Merging
 
@@ -426,22 +419,20 @@ For fetch'n'merge we have a regular `git pull` obviously...
 * Way 1: `git checkout -b new-whatever-branch origin/master`
 * Way 2: `git branch -u origin/master foo` (or `git branch -u origin/master` if `foo` is currently checked out)
 
-
 == Push arguments
 
 `git push <remote> <place>`
 
 means:
+
 ====
-Go to the branch named "master" in my repository, grab all the commits,
-and then go to the branch "master" on the remote named "origin".
+Go to the branch named "master" in my repository, grab all the commits, and then go to the branch "master" on the remote named "origin".
 Place whatever commits are missing on that branch and then tell me when you're done.
 ====
 
 NOTE: This is done no matter what is the currently checked out branch!
 
-Actually this `git push origin master` is a shorthand for `git push origin master:master` -
-this, however suggests, that there is a more generic command:
+Actually this `git push origin master` is a shorthand for `git push origin master:master` - this, however suggests, that there is a more generic command:
 
 `git push <remote> <source>:<destination>`
 
@@ -458,6 +449,7 @@ where source and destination may indeed be different locations.
 * remote master `(C0, C1)`
 
 ==== Command
+
 `git push origin foo^:master`
 
 ==== After
@@ -482,8 +474,7 @@ where source and destination may indeed be different locations.
 
 * `git pull origin foo` is the same as:
 * `git fetch origin foo; git merge origin/foo` and that's because it's really this:
-* `git fetch origin foo:origin/foo; git merge origin/foo` - and that's why the source location in the merge
-is the destination location from the pull.
+* `git fetch origin foo:origin/foo; git merge origin/foo` - and that's why the source location in the merge is the destination location from the pull.
 And the destination in that merge is whatever branch which is currently checked out.
 
 Another example:

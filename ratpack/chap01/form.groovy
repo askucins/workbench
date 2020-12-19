@@ -1,12 +1,14 @@
+import ratpack.form.Form
+
+import static ratpack.groovy.Groovy.ratpack
 @Grab('io.ratpack:ratpack-groovy:1.8.0')
 @GrabExclude('org.codehaus.groovy:groovy-all')
 @Grab('org.slf4j:slf4j-simple:1.7.30')
 
 import static ratpack.groovy.Groovy.ratpack
-import ratpack.form.Form
 
-static String formHtml() { 
-	"""\
+static String formHtml() {
+    """\
 	<!DOCTYPE html>             
 	<html>
 		<body>
@@ -28,7 +30,7 @@ static String formHtml() {
 }
 
 static String formResponse(String name, String msg) {
-	"""\
+    """\
 	<!DOCTYPE html>
 	<html>
 		<body>
@@ -39,22 +41,22 @@ static String formResponse(String name, String msg) {
 	""".stripIndent()
 }
 
-ratpack {	
-	handlers {
-		all {
-			byMethod {
-				get {
-					response.send "text/html", formHtml()
-				}
-				post {
-					parse(Form).then { formData ->
-						def msg = formData.checked 
-							? "Thanks for the check!"
-							: "Why didn't you check?"
-						response.send "text/html", formResponse(formData.name?: 'Guest', msg)
-					}
-				}
-			}
-		}
-	}
+ratpack {
+    handlers {
+        all {
+            byMethod {
+                get {
+                    response.send "text/html", formHtml()
+                }
+                post {
+                    parse(Form).then { formData ->
+                        def msg = formData.checked
+                            ? "Thanks for the check!"
+                            : "Why didn't you check?"
+                        response.send "text/html", formResponse(formData.name ?: 'Guest', msg)
+                    }
+                }
+            }
+        }
+    }
 }

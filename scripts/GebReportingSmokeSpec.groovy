@@ -7,9 +7,9 @@
 // 3.0.4 is the last version when it works from a command line "groovy GebSmoke.groovy" from SDKMAN's groovy...
 
 @Grapes([
-    @Grab("org.gebish:geb-core:3.4"),
-    @Grab("org.gebish:geb-spock:3.4"),
-    @Grab("org.spockframework:spock-core:2.0-M3-groovy-3.0"),
+    @Grab("org.gebish:geb-core:4.0-rc-1"),
+    @Grab("org.gebish:geb-spock:4.0-rc-1"),
+    @Grab("org.spockframework:spock-core:2.0-M4-groovy-3.0"),
     @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-6"),
     //@Grab("org.seleniumhq.selenium:selenium-firefox-driver:4.0.0-alpha-6"),
     @GrabExclude("org.codehaus.groovy:groovy-xml"),
@@ -26,6 +26,7 @@ import geb.Browser
 import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
 import spock.util.environment.RestoreSystemProperties
+
 //import spock.lang.Ignore
 
 @RestoreSystemProperties
@@ -37,7 +38,7 @@ class GebReportingSmokeSpec extends GebReportingSpec {
     }
 
     def setup() {
-        resetBrowser()
+        testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
     }
 

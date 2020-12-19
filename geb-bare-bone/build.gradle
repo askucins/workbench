@@ -7,63 +7,27 @@ plugins {
     id 'com.github.erdi.idea-base' version '2.2'
 }
 
+/**
+ * Geb and Webdriver configuration
+ */
+
 ext {
-    // GebConfig environments
-    drivers = ['firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare']
-    defaultDriver = 'chromeHeadless'
+    defaultDriver = 'chrome' // 'firefoxBare', 'firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare'
     ext {
-        gebVersion = '3.4.1' // 4.0-rc-1 - resetBrowser in GebTestManager'
-        webdriverVersion = '4.0.0-alpha-6'
+        gebVersion = '4.0-rc-1' // '3.4.1'
+        webdriverVersion = '4.0.0-alpha-6' //7
         chromeDriverVersion = {
             (project.findProperty('qa.chromium') != null)
-                ? '84.0.4147.30'
-                : '85.0.4183.38'
-            //TODO this doesn't work right now !!
+                ? '87.0.4280.88'
+                : '88.0.4324.27'
         }()
         geckoDriverVersion = '0.26.0'
     }
 }
 
-dependencies {
-    implementation 'io.netty:netty-buffer:4.1.51.Final'
-
-    implementation "org.gebish:geb-core:${gebVersion}"
-    testImplementation "org.gebish:geb-spock:${gebVersion}"
-    implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
-        exclude group: 'io.netty'
-    }
-    implementation "org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}"
-
-    //TODO It still throws an error...
-    testImplementation('com.athaydes:spock-reports:2.0-RC2') {
-        transitive = false
-    }
-
-    // Proxy https://github.com/browserup/browserup-proxy
-    def versionBrowserUp = '2.1.1'
-    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
-    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
-    // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.0-beta-5'
-
-}
-
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
     systemProperty 'geb.build.reportsDir', 'reports'
-
-    testLogging {
-        showStandardStreams = true
-        events 'passed', 'failed'
-        exceptionFormat 'full'
-
-        debug {
-            events 'passed', 'skipped', 'failed'
-            showStackTraces true
-            exceptionFormat 'full'
-        }
-    }
-    useJUnitPlatform()
 }
 
 webdriverBinaries {
@@ -93,13 +57,7 @@ task refreshWebdriverConfiguration {
     }
 }
 
-task cleanReports(type: Delete) {
-    group = 'other'
-    description = 'removes geb reports'
-    delete 'reports'
-}
-
-task removeWebdriverInstances() {
+task removeChromedriverInstances() {
     group = 'other'
     description = 'removes hanging instances of webdriver'
 
@@ -125,4 +83,48 @@ task removeWebdriverInstances() {
     doLast {
         doRemoveWebdriverInstances()
     }
+}
+
+task cleanGebTestResults(type: Delete) {
+    group = 'other'
+    description = 'removes geb reports and logs'
+    delete "reports"
+    delete "logs"
+}
+
+/**
+ *  Usual configuration
+ */
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.gebish:geb-core:${gebVersion}"
+    testImplementation "org.gebish:geb-spock:${gebVersion}"
+    implementation 'io.netty:netty-buffer:4.1.56.Final'
+    implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+    implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
+
+    // TODO check https://github.com/AOEpeople/geb-spock-reports
+    testImplementation 'com.aoe:geb-spock-reports:0.3.0-RC1'
+
+    // Full-page screenshots https://github.com/pazone/ashot
+    implementation 'ru.yandex.qatools.ashot:ashot:1.5.4'
+    // TODO compare with the one used by Piotr:
+    // implementation 'com.assertthat:selenium-shutterbug:1.2'
+
+    // Proxy https://github.com/browserup/browserup-proxy
+    def versionBrowserUp = '2.1.2'
+    implementation "com.browserup:browserup-proxy:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // Proxy https://github.com/mrog/LittleProxy
+    implementation 'xyz.rogfam:littleproxy:2.0.1'
 }

@@ -8,6 +8,7 @@ class ConfigProviderSpec extends Specification {
     def setupSpec() {
         ConfigProvider.reset()
     }
+
     def "should return configurations"() {
         expect:
         ConfigProvider.env.dev == ConfigProvider.next()

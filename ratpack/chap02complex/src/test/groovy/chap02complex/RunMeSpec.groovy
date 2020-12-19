@@ -8,7 +8,7 @@ class RunMeSpec extends Specification {
 
     def "should find client version of (#version)"() {
         expect:
-        ClientVersion.fromString(version) == clientVersion 
+        ClientVersion.fromString(version) == clientVersion
         where:
         version                    | clientVersion
         "Microservice Client v1.0" | ClientVersion.V1

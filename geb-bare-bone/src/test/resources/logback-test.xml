@@ -18,7 +18,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.askucins"  additivity="true" level="DEBUG">
+    <logger name="org.askucins" additivity="true" level="DEBUG">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </logger>

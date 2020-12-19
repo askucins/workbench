@@ -1,5 +1,7 @@
 plugins {
-    id 'org.asciidoctor.convert' version '2.4.0' apply false
+    id 'idea'
+    id 'groovy'
+    id 'org.asciidoctor.convert' version '2.4.0'
 }
 
 wrapper {
@@ -21,6 +23,21 @@ allprojects {
         gw allDeps --configuration api
     */
     task allDeps(type: DependencyReportTask) {}
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+asciidoctor {
+    sourceDir file('.')
+    sources {
+        include 'readme.adoc'
+    }
+    outputDir file('build/docs')
 }
 
 subprojects {
@@ -48,17 +65,19 @@ configure(subprojects.findAll {
         testImplementation 'org.junit.platform:junit-platform-testkit:1.7.0'
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
 
+        //TODO It still throws an error...
+        testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+            transitive = false
+        }
     }
 }
 
 subprojects {
     tasks.withType(Test) {
-
-        useJUnitPlatform()
-
         testLogging {
+            showStandardStreams = true
             events 'passed', 'failed'
-            exceptionFormat 'short'
+            exceptionFormat 'full'
 
             debug {
                 events 'passed', 'skipped', 'failed'
@@ -66,5 +85,6 @@ subprojects {
                 exceptionFormat 'full'
             }
         }
+        useJUnitPlatform()
     }
 }

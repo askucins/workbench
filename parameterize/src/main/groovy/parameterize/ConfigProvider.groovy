@@ -11,7 +11,7 @@ class ConfigProvider {
         prod: [id: '03-PROD', label: 'This is prod'] as Config
     ]
 
-    private static  returnIterator() {
+    private static returnIterator() {
         ConfigProvider.env.values().sort { it.id }.iterator()
     }
 

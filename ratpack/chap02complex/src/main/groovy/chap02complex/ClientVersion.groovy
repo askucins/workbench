@@ -12,7 +12,7 @@ enum ClientVersion {
     }
 
     static ClientVersion fromString(String val) {
-        values().find {it.version == val } ?: null
+        values().find { it.version == val } ?: null
     }
 }
 

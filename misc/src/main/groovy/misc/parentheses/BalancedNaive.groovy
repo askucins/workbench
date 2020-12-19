@@ -2,7 +2,7 @@ package misc.parentheses
 
 import groovy.util.logging.Slf4j
 
-import static Paren.*
+import static misc.parentheses.Paren.*
 
 @Slf4j
 class BalancedNaive implements Balanced {

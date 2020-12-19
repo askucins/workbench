@@ -12,6 +12,7 @@ class CustomizedFirefoxDriver {
 
     static FirefoxDriver customizedFirefoxDriver(Map config) {
         FirefoxOptions options = new FirefoxOptions()
+        //TODO verify if needed...
         options.setCapability('marionette', true)
 
         if (config?.headless) {

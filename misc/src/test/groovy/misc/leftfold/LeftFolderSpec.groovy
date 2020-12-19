@@ -1,6 +1,7 @@
 package misc.leftfold
 
-import spock.lang.*
+
+import spock.lang.Specification
 
 class LeftFolderSpec extends Specification {
 
