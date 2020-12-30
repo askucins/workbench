@@ -42,12 +42,12 @@ class ProxySpec extends GebReportingSpec {
     }
 
     def cleanup() {
-        log.info "Closing proxy..."
-        proxy?.stop()
         log.info "Closing webdriver..."
         driver?.quit()
         testManager.resetBrowser()
         CachingDriverFactory.clearCacheAndQuitDriver()
+        log.info "Closing proxy..."
+        proxy?.stop()
     }
 
     def "should display title section - via Firefox"() {
