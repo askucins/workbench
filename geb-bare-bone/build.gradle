@@ -8,35 +8,28 @@ plugins {
 }
 
 /**
- * Geb and Webdriver configuration
+ * Geb and Webdriver mgmt
+ * Properties:
+ *  qa.webdriver
+ *  qa.chromium
  */
 
-ext {
-    defaultDriver = 'chrome' // 'firefoxBare', 'firefox', 'firefoxHeadless', 'chrome', 'chromeHeadless', 'chromeBare'
-    ext {
-        gebVersion = '4.0-rc-1' // '3.4.1'
-        webdriverVersion = '4.0.0-alpha-6' //7
-        chromeDriverVersion = {
-            (project.findProperty('qa.chromium') != null)
-                ? '87.0.4280.88'
-                : '88.0.4324.27'
-        }()
-        geckoDriverVersion = '0.26.0'
-    }
-}
-
 tasks.withType(Test) {
-    systemProperty 'geb.env', project.findProperty('webdriver') ?: defaultDriver
+    systemProperty 'geb.env', project.findProperty('qa.webdriver')
     systemProperty 'geb.build.reportsDir', 'reports'
 }
 
 webdriverBinaries {
     driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
     chromedriver {
-        version = chromeDriverVersion
+        version = {
+            (project.findProperty('qa.chromium') != null)
+                ? '88.0.4324.27'
+                : '87.0.4280.88'
+        }()
         fallbackTo32Bit = true
     }
-    geckodriver geckoDriverVersion
+    geckodriver '0.26.0'
 }
 
 task refreshWebdriverConfiguration {
@@ -57,7 +50,7 @@ task refreshWebdriverConfiguration {
     }
 }
 
-task removeChromedriverInstances() {
+task removeWebdriverInstances() {
     group = 'other'
     description = 'removes hanging instances of webdriver'
 
@@ -72,11 +65,19 @@ task removeChromedriverInstances() {
         }
         exec {
             ignoreExitValue true
+            commandLine "pgrep", "-f", "marionette"
+        }
+        exec {
+            ignoreExitValue true
             commandLine "pkill", "-f", "webdriver"
         }
         exec {
             ignoreExitValue true
             commandLine "pkill", "-f", "chromedriver"
+        }
+        exec {
+            ignoreExitValue true
+            commandLine "pkill", "-f", "marionette"
         }
     }
 
@@ -102,9 +103,14 @@ repositories {
 }
 
 dependencies {
+    def gebVersion = '4.0-rc-1'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    implementation 'io.netty:netty-buffer:4.1.56.Final'
+    def webdriverVersion = '4.0.0-alpha-6' // '4.0.0-alpha-7'
+    implementation 'io.netty:netty-buffer:4.1.56.Final' // TODO see below - workaround
+    implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
+        exclude group: 'io.netty'
+    }
     implementation("org.seleniumhq.selenium:selenium-chrome-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -112,6 +118,10 @@ dependencies {
         exclude group: 'io.netty'
     }
 
+    // TODO It still throws an error...
+    //testImplementation('com.athaydes:spock-reports:2.0-RC2') {
+    //    transitive = false
+    //}
     // TODO check https://github.com/AOEpeople/geb-spock-reports
     testImplementation 'com.aoe:geb-spock-reports:0.3.0-RC1'
 

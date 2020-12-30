@@ -4,6 +4,7 @@ import com.browserup.bup.filters.RequestFilter
 import com.browserup.bup.filters.ResponseFilter
 import com.browserup.bup.util.HttpMessageContents
 import com.browserup.bup.util.HttpMessageInfo
+import geb.driver.CachingDriverFactory
 import geb.spock.GebReportingSpec
 import groovy.util.logging.Slf4j
 import io.netty.handler.codec.http.HttpRequest
@@ -21,6 +22,7 @@ class ProxySpec extends GebReportingSpec {
 
     def setup() {
         proxy = new BrowserUpProxyServer()
+        //proxy.trustAllServers = true
         proxy.start()
 
         proxy.addRequestFilter(new RequestFilter() {
@@ -40,8 +42,12 @@ class ProxySpec extends GebReportingSpec {
     }
 
     def cleanup() {
-        driver?.quit()
+        log.info "Closing proxy..."
         proxy?.stop()
+        log.info "Closing webdriver..."
+        driver?.quit()
+        testManager.resetBrowser()
+        CachingDriverFactory.clearCacheAndQuitDriver()
     }
 
     def "should display title section - via Firefox"() {

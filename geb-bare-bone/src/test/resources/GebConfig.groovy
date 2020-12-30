@@ -11,12 +11,15 @@ import static utils.CustomizedFirefoxDriver.customizedFirefoxDriver
 
 Logger log = LoggerFactory.getLogger("GebConfig")
 
+// Default driver
+driver = { customizedChromeDriver([headless: false]) }
+
 environments {
     firefoxBare {
         driver = { new FirefoxDriver() }
     }
     firefox {
-        driver = { customizedFirefoxDriver([:]) }
+        driver = { customizedFirefoxDriver([headless: false]) }
     }
     firefoxHeadless {
         driver = { customizedFirefoxDriver([headless: true]) }
@@ -32,6 +35,10 @@ environments {
     }
 }
 
+//cacheDriver = false
+//cacheDriverPerThread = true
+
+requirePageAtCheckers = true
 atCheckWaiting = true
 
 waiting {
@@ -45,14 +52,3 @@ waiting {
         }
     }
 }
-
-navigatorEventListener = new NavigatorEventListenerSupport() {
-    void afterClick(Browser browser, Navigator navigator) {
-        // TODO This actually breaks those dynamic-navigator tests!!!
-        //log.debug "${navigator*.tag()} was clicked"
-        log.debug "Something was clicked!"
-    }
-}
-
-//cacheDriver = false
-//cacheDriverPerThread = true
