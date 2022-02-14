@@ -3,19 +3,19 @@ plugins {
 }
 
 dependencies {
-    compile project(':fun-with-groovy')
+    api project(':fun-with-groovy')
 }
 
 mainClassName = 'greeter.Greeter'
 
 distZip {
     from project(':docs').asciidoctor, {
-        into "${project.name}-${version}"
+        into "${project.name}-${archiveVersion}"
     }
 }
 
 distTar {
     from project(':docs').asciidoctor, {
-        into "${project.name}-${version}"
+        into "${project.name}-${archiveVersion}"
     }
 }
