@@ -4,43 +4,43 @@
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "99.0.4844.17",
-      "url": "https://chromedriver.storage.googleapis.com/99.0.4844.17/chromedriver_linux64.zip"
+      "version": "108.0.5359.22",
+      "url": "https://chromedriver.storage.googleapis.com/108.0.5359.22/chromedriver_linux64.zip"
     },
     {
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "98.0.4758.80",
-      "url": "https://chromedriver.storage.googleapis.com/98.0.4758.80/chromedriver_linux64.zip"
+      "version": "107.0.5304.62",
+      "url": "https://chromedriver.storage.googleapis.com/107.0.5304.62/chromedriver_linux64.zip"
     },
     {
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "97.0.4692.71",
-      "url": "https://chromedriver.storage.googleapis.com/97.0.4692.71/chromedriver_linux64.zip"
+      "version": "106.0.5249.61",
+      "url": "https://chromedriver.storage.googleapis.com/106.0.5249.61/chromedriver_linux64.zip"
     },
     {
       "name": "chromedriver",
       "platform": "windows",
       "bit": "32",
-      "version": "99.0.4844.17",
-      "url": "https://chromedriver.storage.googleapis.com/99.0.4844.17/chromedriver_win32.zip"
+      "version": "108.0.5359.22",
+      "url": "https://chromedriver.storage.googleapis.com/108.0.5359.22/chromedriver_win32.zip"
     },
     {
       "name": "chromedriver",
       "platform": "windows",
       "bit": "32",
-      "version": "98.0.4758.80",
-      "url": "https://chromedriver.storage.googleapis.com/98.0.4758.80/chromedriver_win32.zip"
+      "version": "107.0.5304.62",
+      "url": "https://chromedriver.storage.googleapis.com/107.0.5304.62/chromedriver_win32.zip"
     },
     {
       "name": "chromedriver",
       "platform": "windows",
       "bit": "32",
-      "version": "97.0.4692.71",
-      "url": "https://chromedriver.storage.googleapis.com/97.0.4692.71/chromedriver_win32.zip"
+      "version": "106.0.5249.61",
+      "url": "https://chromedriver.storage.googleapis.com/106.0.5249.61/chromedriver_win32.zip"
     }
   ]
 }

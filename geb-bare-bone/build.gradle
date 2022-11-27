@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.codehaus.groovy:groovy-json:3.0.10'
+        classpath 'org.codehaus.groovy:groovy-json:3.0.13'
     }
 }
 
@@ -34,11 +34,11 @@ webdriverBinaries {
         version = {
             (project.findProperty('qa.chromium') != null)
                 ? '89.0.4389.23'
-                : '98.0.4758.80'
+                : '107.0.5304.62'
         }()
         fallbackTo32Bit = true
     }
-    geckodriver '0.30.0'
+    geckodriver '0.32.0'
 }
 
 task refreshWebdriverConfiguration {
@@ -111,10 +111,10 @@ repositories {
 }
 
 dependencies {
-    def gebVersion = '5.1'
+    def gebVersion = '6.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.1.2'
+    def webdriverVersion = '4.6.0'
     implementation 'io.netty:netty-buffer:4.1.56.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -132,11 +132,11 @@ dependencies {
     //implementation("org.seleniumhq.selenium:selenium-devtools:4.0.0-rc-1") {
     //    exclude group: 'io.netty'
     //}
-    implementation("org.seleniumhq.selenium:selenium-devtools-v97:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v107:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
-    testImplementation('com.athaydes:spock-reports:2.3.0-groovy-3.0') {
+    testImplementation('com.athaydes:spock-reports:2.3.2-groovy-3.0') {
         transitive = false
     }
     // TODO check https://github.com/AOEpeople/geb-spock-reports
@@ -153,5 +153,5 @@ dependencies {
     implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
     // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.7'
+    implementation 'xyz.rogfam:littleproxy:2.0.14'
 }
