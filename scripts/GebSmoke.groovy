@@ -2,28 +2,27 @@
 // To run in Intellij add this module/jar as a dependency: org.apache.ivy:ivy:[version]
 // e.g. /home/askuci/.groovy/grapes/org.apache.ivy/ivy/jars/ivy-2.5.0.jar
 // To get it installed: grape install org.apache.ivy ivy 2.5.0
-//
-// - Groovy 3.0.4 vs 3.0.5 command line
-// 3.0.4 is the last version when it works from a command line "groovy GebSmoke.groovy" from SDKMAN's groovy...
+
+// As of 2023-02-19 it works with Groovy 4.0.9
+// Known issues: that com.beust:jcommander:1.82 has to be downloaded manually!
 
 @Grapes([
-    @Grab("org.gebish:geb-core:3.4"),
-    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-6"),
-    //@Grab("org.seleniumhq.selenium:selenium-firefox-driver:4.0.0-alpha-6"),
-    @GrabExclude("org.codehaus.groovy:groovy-xml"),
-    @GrabExclude("org.codehaus.groovy:groovy-json"),
-    @GrabExclude("org.codehaus.groovy:groovy-swing"),
-    @GrabExclude("org.codehaus.groovy:groovy-datetime"),
-    @GrabExclude("org.codehaus.groovy:groovy-jsr223"),
-    @GrabExclude("org.codehaus.groovy:groovy-macro"),
-    @GrabExclude("org.codehaus.groovy:groovy-nio"),
-    @GrabExclude("org.codehaus.groovy:groovy-sql"),
+    @Grab("org.gebish:geb-core:7.0"),
+    @Grab("org.seleniumhq.selenium:selenium-support:4.8.1"),
+    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.8.1"),
+    @Grab("org.seleniumhq.selenium:selenium-devtools-v110:4.8.1"),
+    @Grab("io.netty:netty-buffer:4.1.89.Final"),
+    @Grab("com.beust:jcommander:1.82"),
+    @GrabExclude(group = "io.netty", module = "netty-codec-socks"),
+    @GrabExclude(group = "io.netty", module = "netty-handler-proxy"),
+    @GrabExclude("org.apache.groovy:groovy-xml"),
+    @GrabExclude("org.apache.groovy:groovy-macro")
 ])
 
 import geb.Browser
 
-System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/85.0.4183.38/chromedriver_linux64/6h50nn75cxnis2g4ls5ycnvgk/chromedriver')
-System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.27.0/geckodriver-v0.27.0-linux64.tar/5qh0ei3isy5x1vjh8hd5x98eq/geckodriver')
+System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/110.0.5481.77/chromedriver_linux64/97eqo56c0rf1sdkxgnwf50it2/chromedriver')
+System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.32.0/geckodriver-v0.32.0-linux64.tar/al74c7b0kgczcdd5kqtkw5db6/geckodriver')
 
 Browser.drive {
     go "https://gebish.org"
