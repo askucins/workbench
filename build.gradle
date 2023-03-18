@@ -4,7 +4,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = '8.0.1'
+    gradleVersion = '8.0.2'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -70,10 +70,10 @@ configure(subprojects.findAll {
 
     dependencies {
         implementation 'org.apache.ivy:ivy:2.5.0' // Not really needed... it's for IntelliJ
-        implementation 'org.apache.groovy:groovy-all:4.0.9'
-        implementation 'org.apache.groovy:groovy-json:4.0.9'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.9'
-        implementation 'org.apache.groovy:groovy-xml:4.0.9'
+        implementation 'org.apache.groovy:groovy-all:4.0.10'
+        implementation 'org.apache.groovy:groovy-json:4.0.10'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.10'
+        implementation 'org.apache.groovy:groovy-xml:4.0.10'
         implementation 'org.slf4j:slf4j-api:2.0.6'
         implementation 'ch.qos.logback:logback-classic:1.4.5'
         def spockVersion = '2.4-M1-groovy-4.0'

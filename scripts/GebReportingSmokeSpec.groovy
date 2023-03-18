@@ -3,7 +3,7 @@
 // e.g. /home/askuci/.groovy/grapes/org.apache.ivy/ivy/jars/ivy-2.5.0.jar
 // To get it installed: grape install org.apache.ivy ivy 2.5.0
 
-// As of 2023-02-19 it works with Groovy 4.0.9
+// As of 2023-02-19 it works with Groovy 4.0.10
 // Known issues: that com.beust:jcommander:1.82 has to be downloaded manually!
 
 @Grapes([
