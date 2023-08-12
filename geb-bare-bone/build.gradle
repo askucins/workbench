@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.groovy:groovy-json:4.0.10'
+        classpath 'org.apache.groovy:groovy-json:4.0.13'
     }
 }
 
@@ -13,7 +13,7 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 plugins {
-    id 'com.github.erdi.webdriver-binaries' version '3.0'
+    id 'com.github.erdi.webdriver-binaries' version '3.2'
 }
 
 /**
@@ -33,12 +33,12 @@ webdriverBinaries {
     chromedriver {
         version = {
             (project.findProperty('qa.chromium') != null)
-                ? '89.0.4389.23'
-                : '110.0.5481.77'
+                ? '110.0.5481.77'
+                : '115.0.5790.170'
         }()
         fallbackTo32Bit = true
     }
-    geckodriver '0.32.0'
+    geckodriver '0.33.0'
 }
 
 task refreshWebdriverConfiguration {
@@ -114,7 +114,7 @@ dependencies {
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.8.1'
+    def webdriverVersion = '4.11.0'
     implementation 'io.netty:netty-buffer:4.1.89.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -128,34 +128,32 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    //TODO check why there is a different version available there
-    //implementation("org.seleniumhq.selenium:selenium-devtools:4.0.0-rc-1") {
-    //    exclude group: 'io.netty'
-    //}
-    implementation("org.seleniumhq.selenium:selenium-devtools-v110:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v115:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
-    //TODO it throws sometimes OOM
-    //testImplementation('com.athaydes:spock-reports:2.4.0-groovy-4.0') {
-    //    transitive = false
-    //}
+    testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
+        transitive = false
+    }
 
     // TODO check https://github.com/AOEpeople/geb-spock-reports
     testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
         exclude group: 'org.codehaus.groovy'
     }
 
-    // Full-page screenshots https://github.com/pazone/ashot
-    implementation 'ru.yandex.qatools.ashot:ashot:1.5.4'
-    // TODO compare with the one used by Piotr:
-    // implementation 'com.assertthat:selenium-shutterbug:1.6'
+    implementation('com.assertthat:selenium-shutterbug:1.6') {
+        exclude group: 'org.seleniumhq.selenium'
+        exclude group: 'org.codehaus.groovy'
+    }
 
-    // Proxy https://github.com/browserup/browserup-proxy
-    def versionBrowserUp = '2.1.2'
-    implementation "com.browserup:browserup-proxy:${versionBrowserUp}"
-    implementation "com.browserup:browserup-proxy-core:${versionBrowserUp}"
-    implementation "com.browserup:browserup-proxy-mitm:${versionBrowserUp}"
+    // Proxy unmaintained: https://github.com/browserup/browserup-proxy
+    // Replaced by https://github.com/valfirst/browserup-proxy
+    //TODO Replace finally by https://github.com/browserup/mitmproxy
+    def versionBrowserUp = '2.2.11'
+    implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
+    implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
+    implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
+
     // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.15'
+    implementation 'xyz.rogfam:littleproxy:2.0.19'
 }

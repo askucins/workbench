@@ -69,22 +69,22 @@ configure(subprojects.findAll {
     }
 
     dependencies {
-        implementation 'org.apache.ivy:ivy:2.5.0' // Not really needed... it's for IntelliJ
-        implementation 'org.apache.groovy:groovy-all:4.0.10'
-        implementation 'org.apache.groovy:groovy-json:4.0.10'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.10'
-        implementation 'org.apache.groovy:groovy-xml:4.0.10'
-        implementation 'org.slf4j:slf4j-api:2.0.6'
-        implementation 'ch.qos.logback:logback-classic:1.4.5'
+        implementation 'org.apache.ivy:ivy:2.5.1' // Not really needed... it's for IntelliJ
+        implementation 'org.apache.groovy:groovy-all:4.0.13'
+        implementation 'org.apache.groovy:groovy-json:4.0.13'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.13'
+        implementation 'org.apache.groovy:groovy-xml:4.0.13'
+        implementation 'org.slf4j:slf4j-api:2.0.7'
+        implementation 'ch.qos.logback:logback-classic:1.4.11'
         def spockVersion = '2.4-M1-groovy-4.0'
         testImplementation "org.spockframework:spock-core:${spockVersion}", {
             exclude group: 'org.apache.groovy'
         }
         // New Junit...
-        testImplementation 'org.junit.platform:junit-platform-testkit:1.9.2'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+        testImplementation 'org.junit.platform:junit-platform-testkit:1.10.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
 
-        testImplementation('com.athaydes:spock-reports:2.4.0-groovy-4.0') {
+        testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
             transitive = false
         }
     }
