@@ -28,3 +28,6 @@ gradle-app.setting
 # vim swap files - see also: https://stackoverflow.com/questions/4824188/git-ignore-vim-temporary-files
 .*.swp
 .*.swo
+
+# Local das files
+sitemap.xml

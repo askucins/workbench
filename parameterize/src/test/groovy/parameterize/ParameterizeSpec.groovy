@@ -11,7 +11,7 @@ import spock.lang.Unroll
 abstract class ParameterizeSpec extends Specification {
 
     @Shared
-    Config config
+    Configuration configuration
 
     @Unroll
     def "should retrieve config id from environment (#instance.id, #attempt)"() {
@@ -21,7 +21,7 @@ abstract class ParameterizeSpec extends Specification {
         log.info "ID: {}", instance.id
         where:
         attempt << (0..4)
-        instance = config
+        instance = configuration
     }
 
     @Unroll
@@ -32,21 +32,21 @@ abstract class ParameterizeSpec extends Specification {
         log.info "Label: {}", instance.label
         where:
         attempt << (0..1)
-        instance = config
+        instance = configuration
 
     }
 
     @Unroll
     def "should fail on PROD env (#instance.id, #attempt)"() {
         expect:
-        (instance.id == ConfigProvider.env.prod.id)
+        (instance.id == ConfigurationProvider.env.prod.id)
             ? instance.label.startsWith('XThis is')
             : instance.label.startsWith('This is')
         cleanup:
         log.info "Fail on PROD: {}", instance.label
         where:
         attempt << (0..1)
-        instance = config
+        instance = configuration
     }
 
 }

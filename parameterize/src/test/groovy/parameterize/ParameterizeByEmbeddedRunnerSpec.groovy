@@ -13,9 +13,9 @@ class ParameterizeByEmbeddedRunnerSpec extends Specification {
     @ConfineMetaClassChanges([ParameterizeSpec])
     def "should validation for (#instance) pass"() {
         given:
-        ParameterizeSpec.metaClass.getConfig = { config }
+        ParameterizeSpec.metaClass.getConfiguration = { configuration }
         def runner = new EmbeddedSpecRunner(throwFailure: false)
-        ConfigProvider.reset()
+        ConfigurationProvider.reset()
         when:
         EmbeddedSpecRunner.SummarizedEngineExecutionResults result = runner.runClass(ParameterizeSpec)
         then:
@@ -23,9 +23,9 @@ class ParameterizeByEmbeddedRunnerSpec extends Specification {
 
         where:
         instance | config                  || expectedFailureCount
-        'PROD'   | ConfigProvider.env.prod || 0
-        'TEST'   | ConfigProvider.env.test || 0
-        'DEV'    | ConfigProvider.env.dev  || 0
+        'PROD'   | ConfigurationProvider.env.prod || 0
+        'TEST'   | ConfigurationProvider.env.test || 0
+        'DEV'    | ConfigurationProvider.env.dev  || 0
     }
 }
 

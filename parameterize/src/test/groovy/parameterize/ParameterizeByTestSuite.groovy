@@ -9,27 +9,27 @@ class ParameterizeByTestSuite {
 
 //    @BeforeEach
 //    static void resetConfig() {
-//        ConfigProvider.reset()
+//        ConfigurationProvider.reset()
 //    }
 //
 //    @Nested
 //    class RunInProdSpec extends ParameterizeSpec {
 //        def setupSpec() {
-//            config = ConfigProvider.env.prod
+//            config = ConfigurationProvider.env.prod
 //        }
 //    }
 //
 //    @Nested
 //    class Run01Spec extends ParameterizeSpec {
 //        def setupSpec() {
-//            config = ConfigProvider.next()
+//            config = ConfigurationProvider.next()
 //        }
 //    }
 //
 //    @Nested
 //    class Run02Spec extends ParameterizeSpec {
 //        def setupSpec() {
-//            config = ConfigProvider.next()
+//            config = ConfigurationProvider.next()
 //        }
 //    }
 

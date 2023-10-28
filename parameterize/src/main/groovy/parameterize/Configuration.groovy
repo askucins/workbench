@@ -5,7 +5,7 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 @Canonical
-class Config {
+class Configuration {
     String id
     String label
 }
