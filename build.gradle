@@ -1,10 +1,21 @@
+//TODO This is only a not-working workaround to enable resolving Grapes in Intellij - TBC
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.apache.ivy:ivy:2.5.2'
+    }
+}
+
 plugins {
     id 'com.github.erdi.idea-base' version '2.2'
-    id 'org.asciidoctor.jvm.convert' version '4.0.0-alpha.1'
+    id 'org.asciidoctor.jvm.convert' version '4.0.3'
 }
 
 wrapper {
-    gradleVersion = '8.4'
+    //Gotcha! Version 8.7 fails with com.github.erdi.webdriver-binaries
+    gradleVersion = '8.6'  // Current 8.10
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -69,27 +80,51 @@ configure(subprojects.findAll {
     }
 
     dependencies {
-        implementation 'org.apache.ivy:ivy:2.5.1' // Not really needed... it's for IntelliJ
-        implementation 'org.apache.groovy:groovy-all:4.0.15'
-        implementation 'org.apache.groovy:groovy-json:4.0.15'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.15'
-        implementation 'org.apache.groovy:groovy-xml:4.0.15'
-        implementation 'org.slf4j:slf4j-api:2.0.7'
-        implementation 'ch.qos.logback:logback-classic:1.4.11'
-        def spockVersion = '2.4-M1-groovy-4.0'
-        testImplementation "org.spockframework:spock-core:${spockVersion}", {
+        implementation 'org.apache.groovy:groovy-all:4.0.22'
+        implementation 'org.apache.groovy:groovy-json:4.0.22'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.22'
+        implementation 'org.apache.groovy:groovy-xml:4.0.22'
+        implementation 'org.apache.groovy:groovy-ginq:4.0.22'
+        implementation 'org.slf4j:slf4j-api:2.0.16'
+        implementation 'ch.qos.logback:logback-classic:1.5.7'
+        def spockVersion = '2.4-M4-groovy-4.0'
+        implementation "org.spockframework:spock-core:${spockVersion}", {
             exclude group: 'org.apache.groovy'
         }
-        // New Junit...
-        testImplementation 'org.junit.platform:junit-platform-testkit:1.10.0'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+        implementation 'org.apache.commons:commons-text:1.12.0'
+        implementation 'commons-io:commons-io:2.16.1'
 
-        testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
+        //TODO it throws sometimes OOM (2023-06-12)
+        testImplementation('com.athaydes:spock-reports:2.5.1-groovy-4.0') {
             transitive = false
+        }
+
+        // New Junit...
+        testImplementation 'org.junit.platform:junit-platform-testkit:1.11.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0'
+
+    }
+
+    tasks.withType(GroovyCompile).configureEach {
+        options.incremental = true
+        options.incrementalAfterFailure = true
+        doFirst {
+            logger.lifecycle 'Explicitly enabling incremental compilation :{} in task: {}', options.incremental, it.name
+        }
+        //See: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.compile.GroovyCompileOptions.html
+        configure(groovyOptions.forkOptions) {
+            memoryInitialSize = '512m'
+            memoryMaximumSize = '6g'
+            jvmArgs = ['-Xms512m', '-Xmx6g']
         }
     }
 
+    //TODO read more about that 'configureEach' in https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+    //tasks.withType.configureEach(Test) {
     tasks.withType(Test) {
+        // See https://blog.gradle.org/stop-rerunning-tests
+        systemProperty "random.testing.seed", new Random().nextInt()
+
         testLogging {
             showStandardStreams = true
             events 'passed', 'failed'
@@ -102,5 +137,24 @@ configure(subprojects.findAll {
             }
         }
         useJUnitPlatform()
+    }
+
+
+    task removeTestResults(type: Delete) {
+        group = 'other'
+        description = 'removes reports and logs'
+        delete "reports"
+        delete "logs"
+    }
+
+    task showSomeConfig() {
+        group = 'other'
+        description = 'shows some configuration'
+        doFirst {
+            logger.lifecycle "List of dirs with test classes for project {}", project
+            FileCollection testDirs = project.sourceSets.test.output.classesDirs
+            List<String> paths = testDirs.collect { File file -> file.path }
+            logger.lifecycle ">>> ${paths}"
+        }
     }
 }

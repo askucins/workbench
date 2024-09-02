@@ -4,37 +4,38 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.groovy:groovy-json:4.0.15'
+        classpath 'org.apache.groovy:groovy-json:4.0.22'
     }
+}
+
+plugins {
+    id 'com.github.erdi.webdriver-binaries' version '3.2'
 }
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-plugins {
-    id 'com.github.erdi.webdriver-binaries' version '3.2'
-}
-
 /**
  * Geb and Webdriver mgmt
  * Properties:
  *  qa.webdriver
- *  qa.chromium
+ *  qa.altchrome
  */
 
 tasks.withType(Test) {
     systemProperty 'geb.env', project.findProperty('qa.webdriver')
     systemProperty 'geb.build.reportsDir', 'reports'
+    systemProperty 'qa.altchrome', project.findProperty('qa.altchrome')
 }
 
 webdriverBinaries {
     driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
     chromedriver {
         version = {
-            (project.findProperty('qa.chromium') != null)
-                ? '110.0.5481.77'
-                : '115.0.5790.170'
+            (project.findProperty('qa.altchrome') != null)
+                ? '123.0.6312.122' //TC
+                : '128.0.6613.86' //Laptop
         }()
         fallbackTo32Bit = true
     }
@@ -114,7 +115,7 @@ dependencies {
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.13.0'
+    def webdriverVersion = '4.24.0'
     implementation 'io.netty:netty-buffer:4.1.89.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -128,7 +129,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v117:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v128:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
@@ -149,11 +150,14 @@ dependencies {
     // Proxy unmaintained: https://github.com/browserup/browserup-proxy
     // Replaced by https://github.com/valfirst/browserup-proxy
     //TODO Replace finally by https://github.com/browserup/mitmproxy
-    def versionBrowserUp = '2.2.11'
+    def versionBrowserUp = '2.2.18'
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
-    // Proxy https://github.com/mrog/LittleProxy
-    implementation 'xyz.rogfam:littleproxy:2.0.19'
+    // Proxy https://github.com/LittleProxy/LittleProxy
+    implementation 'io.github.littleproxy:littleproxy:2.2.3'
+
+    // Decompressing Brotli-encoded payload
+    implementation 'org.brotli:dec:0.1.2'
 }

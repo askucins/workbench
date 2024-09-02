@@ -4,43 +4,49 @@
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "112.0.5615.28",
-      "url": "https://chromedriver.storage.googleapis.com/112.0.5615.28/chromedriver_linux64.zip"
+      "version": "128.0.6613.86",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/linux64/chromedriver-linux64.zip",
+      "fileMatchInside": ".*chromedriver$"
     },
     {
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "111.0.5563.64",
-      "url": "https://chromedriver.storage.googleapis.com/111.0.5563.64/chromedriver_linux64.zip"
+      "version": "123.0.6312.122",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/linux64/chromedriver-linux64.zip",
+      "fileMatchInside": ".*chromedriver$"
     },
     {
       "name": "chromedriver",
-      "platform": "linux",
+      "platform": "windows",
       "bit": "64",
-      "version": "110.0.5481.77",
-      "url": "https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_linux64.zip"
+      "version": "128.0.6613.86",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/win64/chromedriver-win64.zip",
+      "fileMatchInside": ".*chromedriver.exe$"
     },
     {
       "name": "chromedriver",
       "platform": "windows",
       "bit": "32",
-      "version": "112.0.5615.28",
-      "url": "https://chromedriver.storage.googleapis.com/112.0.5615.28/chromedriver_win32.zip"
+      "version": "128.0.6613.86",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/win32/chromedriver-win32.zip",
+      "fileMatchInside": ".*chromedriver.exe$"
+    },
+    {
+      "name": "chromedriver",
+      "platform": "windows",
+      "bit": "64",
+      "version": "123.0.6312.122",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/win64/chromedriver-win64.zip",
+      "fileMatchInside": ".*chromedriver.exe$"
     },
     {
       "name": "chromedriver",
       "platform": "windows",
       "bit": "32",
-      "version": "111.0.5563.64",
-      "url": "https://chromedriver.storage.googleapis.com/111.0.5563.64/chromedriver_win32.zip"
-    },
-    {
-      "name": "chromedriver",
-      "platform": "windows",
-      "bit": "32",
-      "version": "110.0.5481.77",
-      "url": "https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_win32.zip"
+      "version": "123.0.6312.122",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/win32/chromedriver-win32.zip",
+      "fileMatchInside": ".*chromedriver.exe$"
     }
   ]
 }
