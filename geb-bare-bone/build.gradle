@@ -1,12 +1,18 @@
-//TODO This is only a workaround to stop Intellij complaining about those imports below (they work anyway)!
+//TODO Fix these dummy workarounds for Intellij
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.groovy:groovy-json:4.0.22'
+        classpath 'org.apache.ivy:ivy:2.5.2'
+        classpath 'org.apache.groovy:groovy-json:4.0.24'
     }
 }
+
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 plugins {
     id 'com.github.erdi.webdriver-binaries' version '3.2'
@@ -34,8 +40,8 @@ webdriverBinaries {
     chromedriver {
         version = {
             (project.findProperty('qa.altchrome') != null)
-                ? '123.0.6312.122' //TC
-                : '128.0.6613.86' //Laptop
+                ? '130.0.6723.69'
+                : '131.0.6778.108'
         }()
         fallbackTo32Bit = true
     }
@@ -115,8 +121,8 @@ dependencies {
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.24.0'
-    implementation 'io.netty:netty-buffer:4.1.89.Final' // TODO see below - workaround
+    def webdriverVersion = '4.27.0'
+    implementation 'io.netty:netty-buffer:4.1.107.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -129,7 +135,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v128:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v131:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
@@ -147,17 +153,15 @@ dependencies {
         exclude group: 'org.codehaus.groovy'
     }
 
-    // Proxy unmaintained: https://github.com/browserup/browserup-proxy
-    // Replaced by https://github.com/valfirst/browserup-proxy
-    //TODO Replace finally by https://github.com/browserup/mitmproxy
-    def versionBrowserUp = '2.2.18'
+    def versionBrowserUp = '3.0.0'
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
     // Proxy https://github.com/LittleProxy/LittleProxy
-    implementation 'io.github.littleproxy:littleproxy:2.2.3'
+    implementation 'io.github.littleproxy:littleproxy:2.3.3'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'
+
 }

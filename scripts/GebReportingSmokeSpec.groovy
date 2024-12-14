@@ -10,10 +10,10 @@
     @Grab("org.gebish:geb-core:7.0"),
     @Grab("org.gebish:geb-spock:7.0"),
     @Grab("org.spockframework:spock-core:2.4-M1-groovy-4.0"),
-    @Grab("org.seleniumhq.selenium:selenium-support:4.8.1"),
-    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.8.1"),
-    @Grab("org.seleniumhq.selenium:selenium-devtools-v110:4.8.1"),
-    @Grab("io.netty:netty-buffer:4.1.89.Final"),
+    @Grab("org.seleniumhq.selenium:selenium-support:4.27.0"),
+    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.27.0"),
+    @Grab("org.seleniumhq.selenium:selenium-devtools-v131:4.27.0"),
+    @Grab("io.netty:netty-buffer:4.1.107.Final"),
     @Grab("com.beust:jcommander:1.82"),
     @GrabExclude(group = "io.netty", module = "netty-codec-socks"),
     @GrabExclude(group = "io.netty", module = "netty-handler-proxy"),
@@ -29,8 +29,8 @@ import spock.util.environment.RestoreSystemProperties
 class GebReportingSmokeSpec extends GebReportingSpec {
 
     def setupSpec() {
-        System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/110.0.5481.77/chromedriver_linux64/97eqo56c0rf1sdkxgnwf50it2/chromedriver')
-        System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.32.0/geckodriver-v0.32.0-linux64.tar/al74c7b0kgczcdd5kqtkw5db6/geckodriver')
+        System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/131.0.6778.108/chromedriver-linux64/awp5xwjsanmwpvjmeancadl30/chromedriver-linux64/chromedriver')
+        System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.33.0/geckodriver-v0.33.0-linux64.tar/86j8jrdi08s6l2foplf18axub/geckodriver')
     }
 
     def "should pass this test"() {

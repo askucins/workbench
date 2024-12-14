@@ -4,49 +4,17 @@
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "128.0.6613.86",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/linux64/chromedriver-linux64.zip",
+      "version": "131.0.6778.108",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.108/linux64/chromedriver-linux64.zip",
       "fileMatchInside": ".*chromedriver$"
     },
     {
       "name": "chromedriver",
       "platform": "linux",
       "bit": "64",
-      "version": "123.0.6312.122",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/linux64/chromedriver-linux64.zip",
+      "version": "130.0.6723.69",
+      "url": "https://storage.googleapis.com/chrome-for-testing-public/130.0.6723.69/linux64/chromedriver-linux64.zip",
       "fileMatchInside": ".*chromedriver$"
-    },
-    {
-      "name": "chromedriver",
-      "platform": "windows",
-      "bit": "64",
-      "version": "128.0.6613.86",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/win64/chromedriver-win64.zip",
-      "fileMatchInside": ".*chromedriver.exe$"
-    },
-    {
-      "name": "chromedriver",
-      "platform": "windows",
-      "bit": "32",
-      "version": "128.0.6613.86",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/128.0.6613.86/win32/chromedriver-win32.zip",
-      "fileMatchInside": ".*chromedriver.exe$"
-    },
-    {
-      "name": "chromedriver",
-      "platform": "windows",
-      "bit": "64",
-      "version": "123.0.6312.122",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/win64/chromedriver-win64.zip",
-      "fileMatchInside": ".*chromedriver.exe$"
-    },
-    {
-      "name": "chromedriver",
-      "platform": "windows",
-      "bit": "32",
-      "version": "123.0.6312.122",
-      "url": "https://storage.googleapis.com/chrome-for-testing-public/123.0.6312.122/win32/chromedriver-win32.zip",
-      "fileMatchInside": ".*chromedriver.exe$"
     }
   ]
 }
