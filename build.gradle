@@ -1,12 +1,14 @@
-//TODO This is only a not-working workaround to enable resolving Grapes in Intellij - TBC
+//TODO Fix these dummy workarounds for Intellij
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath 'org.apache.ivy:ivy:2.5.2'
+        classpath 'org.apache.groovy:groovy-json:4.0.24'
     }
 }
+
 
 plugins {
     id 'com.github.erdi.idea-base' version '2.2'
@@ -80,11 +82,11 @@ configure(subprojects.findAll {
     }
 
     dependencies {
-        implementation 'org.apache.groovy:groovy-all:4.0.22'
-        implementation 'org.apache.groovy:groovy-json:4.0.22'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.22'
-        implementation 'org.apache.groovy:groovy-xml:4.0.22'
-        implementation 'org.apache.groovy:groovy-ginq:4.0.22'
+        implementation 'org.apache.groovy:groovy-all:4.0.24'
+        implementation 'org.apache.groovy:groovy-json:4.0.24'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.24'
+        implementation 'org.apache.groovy:groovy-xml:4.0.24'
+        implementation 'org.apache.groovy:groovy-ginq:4.0.24'
         implementation 'org.slf4j:slf4j-api:2.0.16'
         implementation 'ch.qos.logback:logback-classic:1.5.7'
         def spockVersion = '2.4-M4-groovy-4.0'
@@ -94,9 +96,13 @@ configure(subprojects.findAll {
         implementation 'org.apache.commons:commons-text:1.12.0'
         implementation 'commons-io:commons-io:2.16.1'
 
-        //TODO it throws sometimes OOM (2023-06-12)
-        testImplementation('com.athaydes:spock-reports:2.5.1-groovy-4.0') {
+        testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
             transitive = false
+        }
+
+        // TODO check https://github.com/AOEpeople/geb-spock-reports
+        testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
+            exclude group: 'org.codehaus.groovy'
         }
 
         // New Junit...
