@@ -25,6 +25,8 @@ metadata:
   labels:
     app: httpbin
   name: httpbin
+  annotations:
+    kftray.app/enabled: "true"
 spec:
   ports:
   - port: 80

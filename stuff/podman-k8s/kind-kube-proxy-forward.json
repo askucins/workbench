@@ -1,0 +1,22 @@
+[
+  {
+    "alias": "wp.localhost.web",
+    "context": "kind-kube",
+    "local_port": 8888,
+    "namespace": "default",
+    "protocol": "tcp",
+    "remote_port": 80,
+    "service": "wp-srv",
+    "workload_type": "service"
+  },
+  {
+    "alias": "httpbin.localhost.web",
+    "context": "kind-kube",
+    "local_port": 8889,
+    "namespace": "default",
+    "protocol": "tcp",
+    "remote_port": 80,
+    "service": "httpbin",
+    "workload_type": "service"
+  }
+]
