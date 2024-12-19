@@ -34,16 +34,3 @@ spec:
     app: httpbin
   sessionAffinity: None
   type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: httpbin
-  labels:
-    app: httpbin
-spec:
-  defaultBackend:
-    service:
-      name: httpbin
-      port:
-        number: 80
