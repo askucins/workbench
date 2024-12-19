@@ -12,7 +12,7 @@ spec:
       imagePullPolicy: IfNotPresent
       args:
         - |-
-          apk add --no-cache busybox-extras bind-tools bash curl wget httpie jq openssl openssh-client strace procps nmap nmap-scripts nmap-ncat tcpdump
+          apk add --no-cache busybox-extras bind-tools bash curl wget httpie elinks jq openssl openssh-client strace procps nmap nmap-scripts nmap-ncat tcpdump
           sleep infinity
       command:
         - /bin/sh
