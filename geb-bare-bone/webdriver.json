@@ -4,8 +4,8 @@
             "name": "chromedriver",
             "platform": "linux",
             "bit": "64",
-            "version": "131.0.6778.108",
-            "url": "https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.108/linux64/chromedriver-linux64.zip",
+            "version": "131.0.6778.204",
+            "url": "https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/linux64/chromedriver-linux64.zip",
             "fileMatchInside": ".*chromedriver$"
         },
         {

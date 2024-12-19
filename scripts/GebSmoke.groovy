@@ -21,7 +21,7 @@
 
 import geb.Browser
 
-System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/131.0.6778.108/chromedriver-linux64/awp5xwjsanmwpvjmeancadl30/chromedriver-linux64/chromedriver')
+System.setProperty('webdriver.chrome.driver', '/home/askuci/.gradle/webdriver/chromedriver/131.0.6778.204/chromedriver-linux64/awp5xwjsanmwpvjmeancadl30/chromedriver-linux64/chromedriver')
 System.setProperty('webdriver.gecko.driver', '/home/askuci/.gradle/webdriver/geckodriver/0.33.0/geckodriver-v0.33.0-linux64.tar/86j8jrdi08s6l2foplf18axub/geckodriver')
 
 Browser.drive {
