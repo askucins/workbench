@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: toolbox
+  namespace: default
+spec:
+  restartPolicy: Never
+  containers:
+    - name: alpine
+      image: docker.io/library/alpine:latest
+      imagePullPolicy: IfNotPresent
+      args:
+        - |-
+          apk add --no-cache busybox-extras bind-tools bash curl wget httpie jq openssl openssh-client strace procps nmap nmap-scripts nmap-ncat tcpdump
+          sleep infinity
+      command:
+        - /bin/sh
+        - -c
