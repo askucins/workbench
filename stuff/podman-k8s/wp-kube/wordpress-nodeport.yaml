@@ -1,0 +1,187 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  namespace: default
+  name: local-storage
+  labels:
+    app: wordpress
+provisioner: rancher.io/local-path
+volumeBindingMode: Immediate
+reclaimPolicy: Delete
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: default
+  name: wp-db-pv
+  labels:
+    app: wordpress
+spec:
+  volumeMode: Filesystem
+  local:
+    path: /tmp/wp-db-pv
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 512Mi
+  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Delete
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kube-worker
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: default
+  name: wp-www-pv
+  labels:
+    app: wordpress
+spec:
+  volumeMode: Filesystem
+  local:
+    path: /tmp/wp-www-pv
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 512Mi
+  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Delete
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kube-worker
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: wp-db-pvc
+  labels:
+    app: wordpress
+spec:
+  volumeName: wp-db-pv
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+  storageClassName: local-storage
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: wp-www-pvc
+  labels:
+    app: wordpress
+spec:
+  volumeName: wp-www-pv
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+  storageClassName: local-storage
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wp-pod
+  namespace: default
+  labels:
+    app: wordpress
+spec:
+  containers:
+    - args:
+        - --default-authentication-plugin=mysql_native_password
+      env:
+        - name: MYSQL_DATABASE
+          value: wordpress
+        - name: MYSQL_USER
+          value: wordpress
+        - name: MYSQL_PASSWORD
+          value: wordpress
+        - name: MYSQL_ROOT_PASSWORD
+          value: some-wordpress
+      image: docker.io/library/mariadb:10.6.4-focal
+      name: wp-db
+      securityContext:
+        privileged: true
+      ports:
+        - containerPort: 3306
+      volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: wp-db-pv
+    - args:
+        - apache2-foreground
+      env:
+        - name: WORDPRESS_DB_PASSWORD
+          value: wordpress
+        - name: WORDPRESS_DB_USER
+          value: wordpress
+        - name: WORDPRESS_DB_NAME
+          value: wordpress
+        - name: WORDPRESS_DB_HOST
+          value: 127.0.0.1
+      image: docker.io/library/wordpress:latest
+      name: wp-www
+      securityContext:
+        privileged: true
+      ports:
+        - containerPort: 80
+          protocol: TCP
+      volumeMounts:
+        - mountPath: /var/www/html
+          name: wp-www-pv
+  volumes:
+    - name: wp-db-pv
+      persistentVolumeClaim:
+        claimName: wp-db-pvc
+    - name: wp-www-pv
+      persistentVolumeClaim:
+        claimName: wp-www-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wp-srv
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: "www"
+  selector:
+    app: wordpress
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wp-net
+  namespace: default
+  labels:
+    app: wordpress
+spec:
+  defaultBackend:
+    service:
+      name: wp-srv
+      port:
+        number: 80
+
