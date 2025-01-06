@@ -159,7 +159,7 @@ dependencies {
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
     // Proxy https://github.com/LittleProxy/LittleProxy
-    implementation 'io.github.littleproxy:littleproxy:2.3.3'
+    implementation 'io.github.littleproxy:littleproxy:2.4.0'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'
