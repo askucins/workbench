@@ -1,27 +1,30 @@
-import geb.spock.GebReportingSpec
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.devtools.DevTools
 import org.openqa.selenium.devtools.v138.network.Network
 import org.openqa.selenium.devtools.v138.storage.Storage
 import org.openqa.selenium.logging.LogType
-import spock.lang.Shared
+import utils.ProxyCustomAuto
 
 import static utils.CustomizedChromeDriver.customizedChromeDriver
 
 @Slf4j
-class SmokeSpec extends GebReportingSpec {
-
-    static Integer bufferSizeForDevToolsNetwork = 10 * 1024 * 1024
-
-    @Shared
-    DevTools devTools
+class ProxyWhenChromeSpec extends ProxySpec {
 
     def setupSpec() {
+        isProxyEnabled = true
+        isHeadless = false
+
+        log.info "Starting proxy if needed"
+        if (isProxyEnabled) {
+            proxy = new ProxyCustomAuto()
+        } else {
+            proxy = null
+        }
         log.info "Starting custom webdriver"
-        browser.driver = customizedChromeDriver([headless: false])
+        browser.driver = customizedChromeDriver([headless: isHeadless, proxy: proxy?.proxy(), shareLocation: true])
         browser.baseUrl = SmokePage.url
         log.info "[baseUrl] {}", baseUrl
+        timestamp = System.currentTimeMillis().toString()
         log.info "Enabling DevTools"
         devTools = (driver as ChromeDriver).getDevTools()
         devTools.createSession()
@@ -59,17 +62,7 @@ class SmokeSpec extends GebReportingSpec {
         }
     }
 
-    def cleanupSpec() {
-        try {
-            log.debug "Cleaning webdriver and proxy after tests"
-            driver?.quit()
-        }
-        catch (e) {
-            log.warn "There were some issues with cleaning webdriver or proxy after tests: {}", e.getStackTrace()
-        }
-    }
-
-    def "should display title section"() {
+    def "should display title section - via Chrome"() {
         when:
         to SmokePage
         then:
