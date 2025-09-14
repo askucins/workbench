@@ -9,7 +9,7 @@
 @Grapes([
     @Grab("org.gebish:geb-core:7.0"),
     @Grab("org.gebish:geb-spock:7.0"),
-    @Grab("org.spockframework:spock-core:2.4-M1-groovy-4.0"),
+    @Grab("org.spockframework:spock-core:2.4-M6-groovy-4.0"),
     @Grab("org.seleniumhq.selenium:selenium-support:4.27.0"),
     @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.27.0"),
     @Grab("org.seleniumhq.selenium:selenium-devtools-v131:4.27.0"),

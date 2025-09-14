@@ -4,69 +4,23 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.ivy:ivy:2.5.2'
-        classpath 'org.apache.groovy:groovy-json:4.0.24'
+        classpath 'org.apache.ivy:ivy:2.5.3'
+        classpath 'org.apache.groovy:groovy-json:4.0.28'
     }
 }
-
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-import org.gradle.jvm.toolchain.JavaLanguageVersion
-
-plugins {
-    id 'com.github.erdi.webdriver-binaries' version '3.2'
-}
-
-import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
 
 /**
  * Geb and Webdriver mgmt
  * Properties:
  *  qa.webdriver
- *  qa.altchrome
  */
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     systemProperty 'geb.env', project.findProperty('qa.webdriver')
     systemProperty 'geb.build.reportsDir', 'reports'
-    systemProperty 'qa.altchrome', project.findProperty('qa.altchrome')
 }
 
-webdriverBinaries {
-    driverUrlsConfiguration = resources.text.fromFile('webdriver.json')
-    chromedriver {
-        version = {
-            (project.findProperty('qa.altchrome') != null)
-                ? '130.0.6723.69'
-                : '131.0.6778.204'
-        }()
-        fallbackTo32Bit = true
-    }
-    geckodriver '0.33.0'
-}
-
-task refreshWebdriverConfiguration {
-    group = 'other'
-    description = 'refreshes configuration of webdriver binaries'
-
-    def slurper = new JsonSlurper()
-    def customWebdriver = slurper.parseText(resources.text.fromFile('webdriver-custom.json').asFile().text)
-    try {
-        def remoteWebdriver = slurper.parseText(new URL('https://raw.githubusercontent.com/webdriverextensions/webdriverextensions-maven-plugin-repository/master/repository-3.0.json').text)
-        def finalWebdriver = slurper.parseText(new JsonBuilder([drivers: customWebdriver.drivers + remoteWebdriver.drivers]).toString())
-        def webdriverJson = new File(projectDir, 'webdriver.json')
-        webdriverJson.delete()
-        webdriverJson << JsonOutput.prettyPrint(JsonOutput.toJson(finalWebdriver))
-    } catch (e) {
-        logger.error("Unable to refresh webdriver versions configuration!")
-        logger.error(e.asString())
-    }
-}
-
-task removeWebdriverInstances() {
+tasks.register('removeWebdriverInstances') {
     group = 'other'
     description = 'removes hanging instances of webdriver'
 
@@ -102,7 +56,7 @@ task removeWebdriverInstances() {
     }
 }
 
-task cleanGebTestResults(type: Delete) {
+tasks.register('cleanGebTestResults', Delete) {
     group = 'other'
     description = 'removes geb reports and logs'
     delete "reports"
@@ -121,8 +75,8 @@ dependencies {
     def gebVersion = '7.0'
     implementation "org.gebish:geb-core:${gebVersion}"
     testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.27.0'
-    implementation 'io.netty:netty-buffer:4.1.107.Final' // TODO see below - workaround
+    def webdriverVersion = '4.34.0'
+    implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
@@ -135,16 +89,16 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v131:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v139:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
-    testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
+    testImplementation('com.athaydes:spock-reports:2.5.1-groovy-4.0') {
         transitive = false
     }
 
     // TODO check https://github.com/AOEpeople/geb-spock-reports
-    testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
+    testImplementation('com.aoe:geb-spock-reports:0.3.0-RC1') {
         exclude group: 'org.codehaus.groovy'
     }
 
@@ -153,13 +107,13 @@ dependencies {
         exclude group: 'org.codehaus.groovy'
     }
 
-    def versionBrowserUp = '3.0.0'
+    def versionBrowserUp = '3.2.0'
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
     // Proxy https://github.com/LittleProxy/LittleProxy
-    implementation 'io.github.littleproxy:littleproxy:2.4.0'
+    implementation 'io.github.littleproxy:littleproxy:2.4.5'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'

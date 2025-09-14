@@ -4,20 +4,18 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.apache.ivy:ivy:2.5.2'
-        classpath 'org.apache.groovy:groovy-json:4.0.24'
+        classpath 'org.apache.ivy:ivy:2.5.3'
     }
 }
 
 
 plugins {
     id 'com.github.erdi.idea-base' version '2.2'
-    id 'org.asciidoctor.jvm.convert' version '4.0.3'
+    id 'org.asciidoctor.jvm.convert' version '4.0.5'
 }
 
 wrapper {
-    //Gotcha! Version 8.7 fails with com.github.erdi.webdriver-binaries
-    gradleVersion = '8.6'  // Current 8.10
+    gradleVersion = '8.14.3'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -70,7 +68,7 @@ configure(subprojects.findAll {
 
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(11)
+            languageVersion = JavaLanguageVersion.of(17)
         }
     }
 
@@ -82,32 +80,32 @@ configure(subprojects.findAll {
     }
 
     dependencies {
-        implementation 'org.apache.groovy:groovy-all:4.0.24'
-        implementation 'org.apache.groovy:groovy-json:4.0.24'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.24'
-        implementation 'org.apache.groovy:groovy-xml:4.0.24'
-        implementation 'org.apache.groovy:groovy-ginq:4.0.24'
-        implementation 'org.slf4j:slf4j-api:2.0.16'
-        implementation 'ch.qos.logback:logback-classic:1.5.7'
-        def spockVersion = '2.4-M4-groovy-4.0'
+        implementation 'org.apache.groovy:groovy-all:4.0.28'
+        implementation 'org.apache.groovy:groovy-json:4.0.28'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.28'
+        implementation 'org.apache.groovy:groovy-xml:4.0.28'
+        implementation 'org.apache.groovy:groovy-ginq:4.0.28'
+        implementation 'org.slf4j:slf4j-api:2.0.17'
+        implementation 'ch.qos.logback:logback-classic:1.5.18'
+        def spockVersion = '2.4-M6-groovy-4.0'
         implementation "org.spockframework:spock-core:${spockVersion}", {
             exclude group: 'org.apache.groovy'
         }
-        implementation 'org.apache.commons:commons-text:1.12.0'
-        implementation 'commons-io:commons-io:2.16.1'
+        implementation 'org.apache.commons:commons-text:1.14.0'
+        implementation 'commons-io:commons-io:2.20.0'
 
-        testImplementation('com.athaydes:spock-reports:2.5.0-groovy-4.0') {
+        testImplementation('com.athaydes:spock-reports:2.5.1-groovy-4.0') {
             transitive = false
         }
 
         // TODO check https://github.com/AOEpeople/geb-spock-reports
-        testImplementation ('com.aoe:geb-spock-reports:0.3.0-RC1') {
+        testImplementation('com.aoe:geb-spock-reports:0.3.0-RC1') {
             exclude group: 'org.codehaus.groovy'
         }
 
         // New Junit...
-        testImplementation 'org.junit.platform:junit-platform-testkit:1.11.0'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0'
+        testImplementation 'org.junit.platform:junit-platform-testkit:1.13.4'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
 
     }
 
@@ -126,8 +124,7 @@ configure(subprojects.findAll {
     }
 
     //TODO read more about that 'configureEach' in https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
-    //tasks.withType.configureEach(Test) {
-    tasks.withType(Test) {
+    tasks.withType(Test).configureEach {
         // See https://blog.gradle.org/stop-rerunning-tests
         systemProperty "random.testing.seed", new Random().nextInt()
 
@@ -143,17 +140,33 @@ configure(subprojects.findAll {
             }
         }
         useJUnitPlatform()
+
+        reports {
+            String reportTimestamp = System.currentTimeMillis().toString()
+            html.outputLocation = file("${reports.html.outputLocation.get()}-${reportTimestamp}")
+            junitXml.outputLocation = file("${reports.junitXml.outputLocation.get()}-${reportTimestamp}")
+            //Gotcha! This is the actual source for other reports!
+            binaryResultsDirectory = file("${binaryResultsDirectory.get()}-${reportTimestamp}")
+        }
+
+        doFirst {
+            logger.lifecycle "... configured test report (dir): {}", reports.html.outputLocation.get()
+            logger.lifecycle "... configured test report (xml): {}", reports.junitXml.outputLocation.get()
+            logger.lifecycle "... configured test report (bin): {}", binaryResultsDirectory.get()
+        }
     }
 
 
-    task removeTestResults(type: Delete) {
+    tasks.register('removeTestResults', Delete) {
         group = 'other'
         description = 'removes reports and logs'
         delete "reports"
         delete "logs"
+        delete "build/reports"
+        delete "build/test-results"
     }
 
-    task showSomeConfig() {
+    tasks.register('showSomeConfig') {
         group = 'other'
         description = 'shows some configuration'
         doFirst {
