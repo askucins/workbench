@@ -89,7 +89,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v139:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v138:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
