@@ -2,6 +2,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url = "https://repository.apache.org/content/repositories/snapshots" }
     }
     dependencies {
         classpath 'org.apache.ivy:ivy:2.5.3'
@@ -69,13 +70,14 @@ tasks.register('cleanGebTestResults', Delete) {
 
 repositories {
     mavenCentral()
+    maven { url = "https://repository.apache.org/content/repositories/snapshots" }
 }
 
 dependencies {
-    def gebVersion = '7.0'
-    implementation "org.gebish:geb-core:${gebVersion}"
-    testImplementation "org.gebish:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.34.0'
+    def gebVersion = '8.0.1-SNAPSHOT'
+    implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
+    testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
+    def webdriverVersion = '4.35.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -89,7 +91,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v138:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v139:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
