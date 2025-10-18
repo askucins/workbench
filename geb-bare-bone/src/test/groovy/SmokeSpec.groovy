@@ -2,8 +2,8 @@ import geb.spock.GebReportingSpec
 import groovy.util.logging.Slf4j
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.devtools.DevTools
-import org.openqa.selenium.devtools.v139.network.Network
-import org.openqa.selenium.devtools.v139.storage.Storage
+import org.openqa.selenium.devtools.v140.network.Network
+import org.openqa.selenium.devtools.v140.storage.Storage
 import org.openqa.selenium.logging.LogType
 import spock.lang.Shared
 

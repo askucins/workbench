@@ -80,11 +80,11 @@ configure(subprojects.findAll {
     }
 
     dependencies {
-        implementation 'org.apache.groovy:groovy-all:4.0.28'
-        implementation 'org.apache.groovy:groovy-json:4.0.28'
-        implementation 'org.apache.groovy:groovy-yaml:4.0.28'
-        implementation 'org.apache.groovy:groovy-xml:4.0.28'
-        implementation 'org.apache.groovy:groovy-ginq:4.0.28'
+        implementation 'org.apache.groovy:groovy-all:4.0.29'
+        implementation 'org.apache.groovy:groovy-json:4.0.29'
+        implementation 'org.apache.groovy:groovy-yaml:4.0.29'
+        implementation 'org.apache.groovy:groovy-xml:4.0.29'
+        implementation 'org.apache.groovy:groovy-ginq:4.0.29'
         implementation 'org.slf4j:slf4j-api:2.0.17'
         implementation 'ch.qos.logback:logback-classic:1.5.18'
         def spockVersion = '2.4-M6-groovy-4.0'
