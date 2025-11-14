@@ -77,7 +77,7 @@ dependencies {
     def gebVersion = '8.0.1-SNAPSHOT'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.36.0'
+    def webdriverVersion = '4.38.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -91,7 +91,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v140:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v142:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
@@ -115,7 +115,7 @@ dependencies {
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
     // Proxy https://github.com/LittleProxy/LittleProxy
-    implementation 'io.github.littleproxy:littleproxy:2.4.5'
+    implementation 'io.github.littleproxy:littleproxy:2.4.6'
 
     // Decompressing Brotli-encoded payload
     implementation 'org.brotli:dec:0.1.2'
