@@ -74,7 +74,7 @@ repositories {
 }
 
 dependencies {
-    def gebVersion = '8.0.1-SNAPSHOT'
+    def gebVersion = '8.0.2-SNAPSHOT'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
     def webdriverVersion = '4.38.0'
