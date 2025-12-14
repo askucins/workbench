@@ -162,8 +162,6 @@ metadata:
   name: wp-srv
   labels:
     app: wordpress
-  annotations:
-    kftray.app/enabled: "true"
 spec:
   ports:
     - port: 80
