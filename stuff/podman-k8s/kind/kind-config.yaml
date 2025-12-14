@@ -1,5 +1,6 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
+name: kube
 nodes:
   - role: control-plane
     # See: https://github.com/kubernetes-sigs/kind/issues/3389#issuecomment-1784159342
