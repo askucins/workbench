@@ -117,6 +117,7 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           value: some-wordpress
       image: docker.io/library/mariadb:10.6.4-focal
+      imagePullPolicy: IfNotPresent
       name: wp-db
       securityContext:
         privileged: true
@@ -137,6 +138,7 @@ spec:
         - name: WORDPRESS_DB_HOST
           value: 127.0.0.1
       image: docker.io/library/wordpress:latest
+      imagePullPolicy: IfNotPresent
       name: wp-www
       securityContext:
         privileged: true
