@@ -15,9 +15,9 @@ spec:
         app: httpbin
     spec:
       containers:
-        - image: docker.io/kennethreitz/httpbin:latest
-          imagePullPolicy: IfNotPresent
-          name: httpbin
+      - image: docker.io/kennethreitz/httpbin:latest
+        imagePullPolicy: IfNotPresent
+        name: httpbin
 ---
 apiVersion: v1
 kind: Service
@@ -25,13 +25,11 @@ metadata:
   labels:
     app: httpbin
   name: httpbin
-  annotations:
-    kftray.app/enabled: "true"
 spec:
   ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
+  - port: 80
+    protocol: TCP
+    targetPort: 80
   selector:
     app: httpbin
   sessionAffinity: None
