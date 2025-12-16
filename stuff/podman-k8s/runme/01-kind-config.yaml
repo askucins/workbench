@@ -1,0 +1,21 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kube
+nodes:
+  - role: control-plane
+    # See: https://github.com/kubernetes-sigs/kind/issues/3389#issuecomment-1784159342
+    extraMounts:
+      - hostPath: /dev
+        containerPath: /dev
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 8080
+        protocol: TCP
+      - containerPort: 31000
+        hostPort: 31000
+        protocol: TCP
+  - role: worker
+    # See: https://github.com/kubernetes-sigs/kind/issues/3389#issuecomment-1784159342
+    extraMounts:
+      - hostPath: /dev
+        containerPath: /dev

@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: httpbin-a
+  namespace: httpbin-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin-a
+  template:
+    metadata:
+      labels:
+        app: httpbin-a
+    spec:
+      containers:
+        - name: httpbin
+          image: kennethreitz/httpbin
+          ports:
+            - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpbin-a-svc
+  namespace: httpbin-a
+spec:
+  selector:
+    app: httpbin-a
+  ports:
+    - port: 80
+      targetPort: 80
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: httpbin-b
+  namespace: httpbin-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin-b
+  template:
+    metadata:
+      labels:
+        app: httpbin-b
+    spec:
+      containers:
+        - name: httpbin
+          image: kennethreitz/httpbin
+          ports:
+            - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpbin-b-svc
+  namespace: httpbin-b
+spec:
+  selector:
+    app: httpbin-b
+  ports:
+    - port: 80
+      targetPort: 80
