@@ -14,7 +14,7 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: httpbin-a
   type: ClusterIP
@@ -62,7 +62,7 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: 8080
   selector:
     app: httpbin-b
   type: ClusterIP
