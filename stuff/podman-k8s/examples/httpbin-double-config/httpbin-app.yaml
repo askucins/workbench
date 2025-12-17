@@ -113,6 +113,29 @@ spec:
     - name: httpbin-gateway
       namespace: istio-system
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /a
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
         - name: httpbin-a
+          port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /b
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: httpbin-b
           port: 80
