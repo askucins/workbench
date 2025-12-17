@@ -40,9 +40,16 @@ spec:
         version: v11
     spec:
       containers:
-        - image: docker.io/kennethreitz/httpbin:latest
+        - image: ghcr.io/psf/httpbin:0.10.2
           imagePullPolicy: IfNotPresent
           name: httpbin-a
+          env:
+            - name: APPLICATION_ROOT
+              value: "/a"
+            - name: PATH_INFO
+              value: "/a"
+            - name: SCRIPT_NAME
+              value: "/a"
 ---
 apiVersion: v1
 kind: Service
@@ -81,9 +88,16 @@ spec:
         version: v11
     spec:
       containers:
-        - image: docker.io/kennethreitz/httpbin:latest
+        - image: ghcr.io/psf/httpbin:0.10.2
           imagePullPolicy: IfNotPresent
           name: httpbin-b
+          env:
+            - name: APPLICATION_ROOT
+              value: "/b"
+            - name: PATH_INFO
+              value: "/b"
+            - name: SCRIPT_NAME
+              value: "/b"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -117,12 +131,12 @@ spec:
         - path:
             type: PathPrefix
             value: /a
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /
+#      filters:
+#        - type: RequestHeaderModifier
+#          requestHeaderModifier:
+#            set:
+#              - name: x-forwarded-prefix
+#                value: /a
       backendRefs:
         - name: httpbin-a
           port: 80
@@ -130,12 +144,12 @@ spec:
         - path:
             type: PathPrefix
             value: /b
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /
+#      filters:
+#        - type: RequestHeaderModifier
+#          requestHeaderModifier:
+#            set:
+#              - name: x-forwarded-prefix
+#                value: /b
       backendRefs:
         - name: httpbin-b
           port: 80
