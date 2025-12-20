@@ -1,0 +1,4 @@
+= Modern Kubernetes Ingress with Istio Gateway API
+
+* Based on: https://medium.com/@guptaaayush8/building-a-modern-kubernetes-ingress-with-istio-gateway-api-a-complete-guide-1a8897629f55
+* Modified by switching to httpbin backend service
