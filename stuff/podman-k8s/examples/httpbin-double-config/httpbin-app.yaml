@@ -131,12 +131,13 @@ spec:
         - path:
             type: PathPrefix
             value: /a
-#      filters:
-#        - type: RequestHeaderModifier
-#          requestHeaderModifier:
-#            set:
-#              - name: x-forwarded-prefix
-#                value: /a
+      #Optional?
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: x-forwarded-prefix
+                value: /a
       backendRefs:
         - name: httpbin-a
           port: 80
@@ -144,12 +145,13 @@ spec:
         - path:
             type: PathPrefix
             value: /b
-#      filters:
-#        - type: RequestHeaderModifier
-#          requestHeaderModifier:
-#            set:
-#              - name: x-forwarded-prefix
-#                value: /b
+      #Optional?
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: x-forwarded-prefix
+                value: /b
       backendRefs:
         - name: httpbin-b
           port: 80
