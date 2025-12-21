@@ -1,0 +1,41 @@
+config:
+  target: "https://httpbin.local"
+  tls:
+    rejectUnauthorized: false
+  phases:
+    # Warm-up and a short spike; adjust to your needs
+    - duration: 30
+      arrivalRate: 10       # 5 new VUs/sec
+      name: warmup
+    - duration: 90
+      arrivalRate: 20
+      name: baseline
+    - duration: 30
+      arrivalRate: 100
+      name: spike
+  #processor: "./processors.js"
+  plugins:
+    ensure: {}             # simple success-rate guard
+  ensure:
+    thresholds:
+      - "http.response_time.p95 < 800"
+      - "http.response_time.p99 < 1500"
+      - "http.requests > 50"
+      - "http.codes.200 > 0"
+  http:
+    timeout: 10000         # 10s
+    pool: 50               # max sockets
+    # Set default headers if needed
+    # headers:
+    #   Accept: "application/json"
+scenarios:
+  - name: GET /headers
+    flow:
+      - get:
+          url: "/headers"
+          qs:
+            lang: "show_env=1"
+          capture:
+            - json: "$"     # capture whole JSON for sanity
+              as: "body"
+      - log: "Status OK, received JSON for /headers"
