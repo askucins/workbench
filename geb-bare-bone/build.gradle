@@ -110,7 +110,6 @@ dependencies {
     }
 
     def versionBrowserUp = '3.2.2'
-    implementation "com.github.valfirst.browserup-proxy:browserup-proxy:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-core:${versionBrowserUp}"
     implementation "com.github.valfirst.browserup-proxy:browserup-proxy-mitm:${versionBrowserUp}"
 
