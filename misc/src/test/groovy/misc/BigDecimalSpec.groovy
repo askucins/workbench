@@ -77,7 +77,7 @@ class BigDecimalSpec extends Specification {
         result == Integer.MIN_VALUE // Wraps around to the minimum value
     }
 
-    def "should trapped into silent overflow (long)"() {
+    def "should be trapped into silent overflow (long)"() {
         given:
         long largeNumber = Long.MAX_VALUE
         and:
