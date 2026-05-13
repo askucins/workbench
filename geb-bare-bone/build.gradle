@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.ivy:ivy:2.5.3'
-        classpath 'org.apache.groovy:groovy-json:4.0.31'
+        classpath 'org.apache.groovy:groovy-json:4.0.32'
     }
 }
 
