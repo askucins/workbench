@@ -7,12 +7,12 @@
 // Known issues: that com.beust:jcommander:1.82 has to be downloaded manually!
 
 @Grapes([
-    @Grab("org.gebish:geb-core:7.0"),
-    @Grab("org.gebish:geb-spock:7.0"),
+    @Grab("org.gebish:geb-core:8.0.1"),
+    @Grab("org.gebish:geb-spock:8.0.1"),
     @Grab("org.spockframework:spock-core:2.4-groovy-4.0"),
-    @Grab("org.seleniumhq.selenium:selenium-support:4.46.0"),
-    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.46.0"),
-    @Grab("org.seleniumhq.selenium:selenium-devtools-v150:4.46.0"),
+    @Grab("org.seleniumhq.selenium:selenium-support:4.50.0"),
+    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.50.0"),
+    @Grab("org.seleniumhq.selenium:selenium-devtools-v154:4.50.0"),
     @Grab("io.netty:netty-buffer:4.1.107.Final"),
     @Grab("com.beust:jcommander:1.82"),
     @GrabExclude(group = "io.netty", module = "netty-codec-socks"),
