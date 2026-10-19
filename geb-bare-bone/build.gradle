@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.ivy:ivy:2.5.3'
-        classpath 'org.apache.groovy:groovy-json:4.0.32'
+        classpath 'org.apache.groovy:groovy-json:4.0.33'
     }
 }
 
@@ -21,40 +21,35 @@ tasks.withType(Test).configureEach {
     systemProperty 'geb.build.reportsDir', 'reports'
 }
 
-tasks.register('removeWebdriverInstances') {
+// This is a replacement for that deprecated Project.exec()
+// See more: https://docs.gradle.org/current/userguide/service_injection.html#execoperations
+abstract class RemoveWebdriverInstances extends DefaultTask {
+    //@javax.inject.Inject
+    @Inject
+    abstract ExecOperations getExecOperations()
+
+    @TaskAction
+    void removeInstances() {
+        ['webdriver', 'chromedriver', 'marionette'].each { processName ->
+            logger.lifecycle "Reporting on hanging instances of process: {}", processName
+            execOperations.exec {
+                ignoreExitValue = true
+                commandLine 'pgrep', processName
+            }
+        }
+        ['webdriver', 'chromedriver', 'marionette'].each { processName ->
+            logger.lifecycle "Removing hanging instances of process: {}", processName
+            execOperations.exec {
+                ignoreExitValue = true
+                commandLine 'pkill', '-f', processName
+            }
+        }
+    }
+}
+
+tasks.register('removeWebdriverInstances', RemoveWebdriverInstances) {
     group = 'other'
     description = 'removes hanging instances of webdriver'
-
-    def doRemoveWebdriverInstances = {
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "webdriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "chromedriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pgrep", "-f", "marionette"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "webdriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "chromedriver"
-        }
-        exec {
-            ignoreExitValue true
-            commandLine "pkill", "-f", "marionette"
-        }
-    }
-
-    doLast {
-        doRemoveWebdriverInstances()
-    }
 }
 
 tasks.register('cleanGebTestResults', Delete) {
@@ -77,7 +72,7 @@ dependencies {
     def gebVersion = '8.0.1'
     implementation "org.apache.groovy.geb:geb-core:${gebVersion}"
     testImplementation "org.apache.groovy.geb:geb-spock:${gebVersion}"
-    def webdriverVersion = '4.46.0'
+    def webdriverVersion = '4.50.0'
     implementation 'io.netty:netty-buffer:4.1.117.Final' // TODO see below - workaround
     implementation("org.seleniumhq.selenium:selenium-support:${webdriverVersion}") {
         exclude group: 'io.netty'
@@ -91,7 +86,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-firefox-driver:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
-    implementation("org.seleniumhq.selenium:selenium-devtools-v150:${webdriverVersion}") {
+    implementation("org.seleniumhq.selenium:selenium-devtools-v154:${webdriverVersion}") {
         exclude group: 'io.netty'
     }
 
