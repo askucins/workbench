@@ -8,9 +8,9 @@
 
 @Grapes([
     @Grab("org.gebish:geb-core:8.0.1"),
-    @Grab("org.seleniumhq.selenium:selenium-support:4.50.0"),
-    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.50.0"),
-    @Grab("org.seleniumhq.selenium:selenium-devtools-v154:4.50.0"),
+    @Grab("org.seleniumhq.selenium:selenium-support:4.53.0"),
+    @Grab("org.seleniumhq.selenium:selenium-chrome-driver:4.53.0"),
+    @Grab("org.seleniumhq.selenium:selenium-devtools-v157:4.53.0"),
     @Grab("io.netty:netty-buffer:4.1.107.Final"),
     @Grab("com.beust:jcommander:1.82"),
     @GrabExclude(group = "io.netty", module = "netty-codec-socks"),
