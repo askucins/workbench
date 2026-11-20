@@ -15,7 +15,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = '8.14.6'
+    gradleVersion = '8.14.7'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -87,7 +87,7 @@ configure(subprojects.findAll {
         implementation 'org.apache.groovy:groovy-ginq:4.0.33'
         implementation 'org.slf4j:slf4j-api:2.0.17'
         implementation 'ch.qos.logback:logback-classic:1.5.18'
-        def spockVersion = '2.4-groovy-4.0'
+        def spockVersion = '2.5-groovy-4.0'
         implementation "org.spockframework:spock-core:${spockVersion}", {
             exclude group: 'org.apache.groovy'
         }
@@ -166,14 +166,15 @@ configure(subprojects.findAll {
         delete "build/test-results"
     }
 
+    def projectPath = path
+    def testDirPaths = sourceSets.test.output.classesDirs.files.collect { File file -> file.path }
+
     tasks.register('showSomeConfig') {
         group = 'other'
         description = 'shows some configuration'
         doFirst {
-            logger.lifecycle "List of dirs with test classes for project {}", project
-            FileCollection testDirs = project.sourceSets.test.output.classesDirs
-            List<String> paths = testDirs.collect { File file -> file.path }
-            logger.lifecycle ">>> ${paths}"
+            logger.lifecycle "List of dirs with test classes for project {}", projectPath
+            logger.lifecycle ">>> ${testDirPaths}"
         }
     }
 }
